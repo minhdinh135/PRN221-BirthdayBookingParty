@@ -8,6 +8,13 @@ public partial class User
     //public string? ProfilePicture { get; set; }
 
     public int UserId {  get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+
+    public int RoleId { get; set; }
+
+    public Role Role { get; set; }
+
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
 }

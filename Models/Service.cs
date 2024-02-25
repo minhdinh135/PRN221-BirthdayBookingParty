@@ -10,8 +10,5 @@ public partial class Service
     public string ServiceName { get; set; }
 
     public int PackageId { get; set; }
-
-    public virtual ICollection<BookingService> BookingServices { get; set; } = new List<BookingService>();
-
     public virtual Package Package { get; set; }
 }
