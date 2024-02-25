@@ -61,29 +61,6 @@ namespace DAOs.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("Models.BookingService", b =>
-                {
-                    b.Property<int>("BookingServiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingServiceId"));
-
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookingServiceId");
-
-                    b.HasIndex("BookingId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("BookingServices");
-                });
-
             modelBuilder.Entity("Models.Package", b =>
                 {
                     b.Property<int>("PackageId")
@@ -131,6 +108,23 @@ namespace DAOs.Migrations
                     b.HasIndex("BookingId");
 
                     b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("Models.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Models.Room", b =>
@@ -183,9 +177,22 @@ namespace DAOs.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Models.Booking", b =>
@@ -199,7 +206,7 @@ namespace DAOs.Migrations
                     b.HasOne("Models.Room", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Models.User", "User")
@@ -215,31 +222,12 @@ namespace DAOs.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Models.BookingService", b =>
-                {
-                    b.HasOne("Models.Booking", "Booking")
-                        .WithMany("BookingServices")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Service", "Service")
-                        .WithMany("BookingServices")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("Service");
-                });
-
             modelBuilder.Entity("Models.Payment", b =>
                 {
                     b.HasOne("Models.Booking", "Booking")
                         .WithMany("Payments")
                         .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Booking");
@@ -256,10 +244,19 @@ namespace DAOs.Migrations
                     b.Navigation("Package");
                 });
 
+            modelBuilder.Entity("Models.User", b =>
+                {
+                    b.HasOne("Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Models.Booking", b =>
                 {
-                    b.Navigation("BookingServices");
-
                     b.Navigation("Payments");
                 });
 
@@ -270,14 +267,14 @@ namespace DAOs.Migrations
                     b.Navigation("Services");
                 });
 
+            modelBuilder.Entity("Models.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Models.Room", b =>
                 {
                     b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("Models.Service", b =>
-                {
-                    b.Navigation("BookingServices");
                 });
 
             modelBuilder.Entity("Models.User", b =>

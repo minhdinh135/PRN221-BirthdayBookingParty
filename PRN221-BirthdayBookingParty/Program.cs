@@ -1,7 +1,15 @@
+using DAOs;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<BookingPartyContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingPartyDB"))
+);
 
 var app = builder.Build();
 
