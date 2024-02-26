@@ -56,12 +56,14 @@
                     <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                         <li class="nav-item active">
 							<a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PrivacyPolicy">Privacy Policy</a></li>
+
                         </li>
 						@if (isAdmin){
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
 					}
 
 						@if (isCustomer){
@@ -69,7 +71,6 @@
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageList">Package List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
 					}
 
 						@if (isHost)
@@ -78,7 +79,6 @@
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageList">Package List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/Room">Rooms List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
 					}
 
                     </ul
@@ -119,11 +119,10 @@
 				<div class="row g-5 mb-5">
 					<div class="col-lg-4">
 						<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">BirthdayBooking<span></span></a></div>
-						<p class="mb-4">BirthdayBooking's purpose is to describe the scope, both the functional and non-functional software requirements and the design constraints of the whole logic sub-component. Furthermore, this document shows how the system's interfaces are designed in detail.</p>
+						<p class="mb-4">Create an unforgettable birthday party experience for children, full of joy and cherished memories. Our Birthday Party Booking service for kids aims to provide a magical celebration customized to the interests and desires of the child. We aim to make your child's special day even more special. Let us take care of the planning and organization, while you enjoy seeing the happy faces of your child shining with joy amidst the fun with friends and family.</p>
 
 						<ul class="list-unstyled custom-social">
 							<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-							<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
 							<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
 						</ul>
 					</div>
@@ -132,16 +131,10 @@
 						<div class="row links-wrap">
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">About us</a></li>
+									<li><a asp-page="/AboutUs">About us</a></li>
 									<li><a href="#">Services</a></li>
 									<li><a href="#">Contact us</a></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-sm-6 col-md-3">
-								<ul class="list-unstyled">
-									<li><a href="#">Our team</a></li>
-									<li><a href="#">Privacy Policy</a></li>
+									<li><a asp-area="" asp-page="/PrivacyPolicy">Privacy Policy</a></li>
 								</ul>
 							</div>
 						</div>
