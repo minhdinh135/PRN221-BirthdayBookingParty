@@ -1,15 +1,20 @@
 using DAOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Service;
+using Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(20));
+
 
 builder.Services.AddDbContext<BookingPartyContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingPartyDB"))
 );
+
 
 var app = builder.Build();
 
@@ -23,6 +28,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
+
 
 app.UseRouting();
 
