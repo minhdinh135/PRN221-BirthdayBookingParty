@@ -1,0 +1,46 @@
+﻿@page
+@model NguyenHoangLamRazorPages.Pages.CustomerProfileModel
+@{
+        <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Customer Profile</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        @if (Model.User != null)
+                        {
+            <div class="mb-3">
+                <strong>Email:</strong> @Model.User.Email
+            </div>
+            <div class="mb-3">
+                <strong>Fullname:</strong> @Model.User.FullName
+            </div>
+            <div class="mb-3">
+                <strong>Address:</strong> @Model.User.Address
+            </div>
+            <div class="mb-3">
+                <strong>Phone:</strong> @Model.User.Phone
+            </div>
+            <div class="mb-3">
+                <strong>Birthday:</strong> @Model.User.Birthday
+            </div>
+                        }
+                        else
+                        {
+            <p>Customer information not available.</p>
+                        }
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a asp-page="/CustomerProfileEdit" class="btn btn-primary">Edit Information</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
