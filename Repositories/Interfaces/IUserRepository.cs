@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Interfaces
 {
-    internal interface IUserRepository
+    public interface IUserRepository : IRepositoryBase<User>
     {
     }
 }

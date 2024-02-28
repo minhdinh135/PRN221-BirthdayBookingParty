@@ -10,13 +10,14 @@ namespace NguyenHoangLamRazorPages.Pages
 {
     public class LoginModel : PageModel
     {
-        private UserService userService;
+        private IUserService userService;
 
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public LoginModel()
+        public LoginModel(IUserService userService)
         {
+			this.userService = userService;
         }
 
         public void OnGet()
@@ -25,8 +26,8 @@ namespace NguyenHoangLamRazorPages.Pages
 
         public void OnPost(string email, string password)
         {
-			userService = new UserService();
-			var user = userService.getAccount(email, password);
+			var user = userService.GetAccount(email, password);
+
             if (user == null )
             {
 				Response.Redirect("/Index");

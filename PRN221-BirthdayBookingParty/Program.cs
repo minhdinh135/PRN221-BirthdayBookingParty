@@ -1,6 +1,8 @@
 using DAOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Repositories;
+using Repositories.Interfaces;
 using Service;
 using Service.Interfaces;
 
@@ -10,11 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(20));
 
-
 builder.Services.AddDbContext<BookingPartyContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingPartyDB"))
 );
 
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
