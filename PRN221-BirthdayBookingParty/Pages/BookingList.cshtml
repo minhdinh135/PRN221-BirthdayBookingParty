@@ -1,32 +1,54 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.BookingListModel
 @{
+
+	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+
 	<table class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<th>UserID</th>
-						<th>RoomId</th>
+						@if(!isCustomer)
+						{
+							<th>UserID</th>
+							<th>RoomId</th>
+						}
+						
 						<th>BookingDate</th>
 						<th>BookingStatus</th>
 						<th>Feedback</th>
-						<th>PackageId</th>
-						<th colspan="2">Action</th>
+
+						@if(!isCustomer)
+						{
+							<th>PackageId</th>
+							<th colspan="2">Action</th>
+
+						}
+
 					</tr>
 				</thead>
 
 				<tbody>
 			@foreach (var Booking in Model.Bookings)
 			{
-									<tr>
-										<td>@Booking.UserId</td>
-										<td>@Booking.RoomId</td>
-										<td>@Booking.BookingDate</td>
-										<td>@Booking.BookingStatus</td>
-										<td>@Booking.Feedback</td>
-										<td>@Booking.PackageId</td>
-												<td><a class="btn btn-primary" asp-page="/BookingUpdate/@Booking.BookingId">Update</a></td>
-												<td><a class="btn btn-danger" asp-route-id="@Booking.BookingId" asp-page="/BookingDelete">Delete</a></td>
-									</tr>
+				<tr>
+					@if(!isCustomer)
+					{
+						<td>@Booking.UserId</td>
+						<td>@Booking.RoomId</td>
+					}
+					
+					<td>@Booking.BookingDate</td>
+					<td>@Booking.BookingStatus</td>
+					<td>@Booking.Feedback</td>
+
+					@if(!isCustomer)
+					{
+						<td>@Booking.PackageId</td>
+						<td><a class="btn btn-primary" asp-page="/BookingUpdate/@Booking.BookingId">Update</a></td>
+						<td><a class="btn btn-danger" asp-route-id="@Booking.BookingId" asp-page="/BookingDelete">Delete</a></td>
+					}
+					
+				</tr>
 			}
 				</tbody>
 			</table>

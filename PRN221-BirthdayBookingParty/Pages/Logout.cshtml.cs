@@ -11,8 +11,7 @@ namespace NguyenHoangLamRazorPages.Pages
 
         public IActionResult OnPost()
         {
-            HttpContext.Session.Remove("Customer");
-            HttpContext.Session.Remove("Admin");
+            HttpContext.Session.Clear();
 
             return RedirectToPage("/Login");
         }
