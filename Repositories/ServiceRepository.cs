@@ -1,14 +1,14 @@
 ﻿using Models;
+using Repositories.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Interfaces
+namespace Repositories
 {
-    public interface IUserService
-    {
-        User GetAccount(string email, string password);
-    }
+	public class ServiceRepository : RepositoryBase<Service>
+	{
+	}
 }

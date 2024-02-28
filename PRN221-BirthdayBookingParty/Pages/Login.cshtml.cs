@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories.Interfaces;
-using Service;
-using Service.Interfaces;
+using Services.Interfaces;
 using System.Text.Json;
 
 namespace NguyenHoangLamRazorPages.Pages
