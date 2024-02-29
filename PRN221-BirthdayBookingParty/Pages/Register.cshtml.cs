@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
-using Repositories;
 using Repositories.Interfaces;
 
 namespace PRN221_BirthdayBookingParty.Pages
@@ -58,4 +57,3 @@ namespace PRN221_BirthdayBookingParty.Pages
         }
     }
 }
-
