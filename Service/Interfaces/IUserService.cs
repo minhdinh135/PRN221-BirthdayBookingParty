@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace Service.Interfaces
 {
     public interface IUserService
     {
-    }
+        User getAccount(string email, string password);
+
+	}
 }
