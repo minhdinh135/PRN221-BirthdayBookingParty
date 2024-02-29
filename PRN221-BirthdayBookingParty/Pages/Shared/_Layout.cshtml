@@ -54,20 +54,17 @@
 
                 <div class="collapse navbar-collapse" id="navbarsFurni">
                     <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-					@if (!isAdmin && !isHost && !isCustomer)
-					{
+						@if (!isAdmin && !isHost && !isCustomer)
+						{
 						<li class="nav-item active">
 							<a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-							@if (!isAdmin && !isHost)
-							{
-								<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
-								<li><a class="nav-link text-dark" asp-area="" asp-page="/PrivacyPolicy">Privacy Policy</a></li>
-
-							}
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PrivacyPolicy">Privacy Policy</a></li>
 						</li>
+						}
+						
 						@if (isAdmin)
 						{
-
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking</a></li>
@@ -90,11 +87,7 @@
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageList">Package List</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/Room">Rooms List</a></li>
 						}
-
-					}
-
-                    </ul>
-				
+				</ul>
                 </div>
             </div>
 		@if (isAdmin || isCustomer || isHost)
