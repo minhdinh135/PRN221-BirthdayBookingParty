@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Interfaces
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
     }
 }
