@@ -12,6 +12,7 @@ namespace NguyenHoangLamRazorPages.Pages
         public IActionResult OnPost()
         {
             HttpContext.Session.Clear();
+
             return RedirectToPage("/Login");
         }
     }

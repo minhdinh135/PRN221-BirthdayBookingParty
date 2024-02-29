@@ -1,8 +1,10 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.BookingListModel
 @{
+    var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
     var isHost = HttpContext.Session.Keys.Contains("HOST");
-}
+
+	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
 
 <div class="container mt-4">
     <h1 class="text-center mb-4">Booking List</h1>
@@ -12,13 +14,15 @@
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
-                            <th>User ID</th>
-                            <th>Room ID</th>
+                            @if(!isCustomer){
+                                <th>User ID</th>
+                                <th>Room ID</th>
+                            }                        
                             <th>Booking Date</th>
                             <th>Booking Status</th>
                             <th>Feedback</th>
                             <th>Package ID</th>
-                            @if (isHost)
+                                @if (isCustomer)
                             {
                                     <th colspan="2">Action</th>
                             }
@@ -28,13 +32,16 @@
                         @foreach (var booking in Model.Bookings)
                         {
                                 <tr>
-                                    <td>@booking.UserId</td>
-                                    <td>@booking.RoomId</td>
+                                    @if (!isCustomer)
+                                    {
+                                        <td>@booking.UserId</td>
+                                         <td>@booking.RoomId</td>
+                                    }                      
                                     <td>@booking.BookingDate</td>
                                     <td>@booking.BookingStatus</td>
                                     <td>@booking.Feedback</td>
                                     <td>@booking.PackageId</td>
-                                @if (isHost)
+                                @if (isCustomer)
                                 {
                                             <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
                                             <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
@@ -47,3 +54,4 @@
         </div>
     </div>
 </div>
+}

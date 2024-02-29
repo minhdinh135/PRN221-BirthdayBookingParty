@@ -1,24 +1,26 @@
 ﻿using Models;
 using Repositories;
-using Service.Interfaces;
+using Repositories.Interfaces;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service
+namespace Services
 {
     public class UserService : IUserService
     {
-        UserRepository repository;
-        public UserService() {
+        private IUserRepository userRepository;
+        public UserService(IUserRepository userRepository) {
+            this.userRepository = userRepository;
         }
 
-        public User getAccount(string email, string password)
+        public User GetAccount(string email, string password)
         {
-            repository = new UserRepository();
-            var user = repository.GetAll().FirstOrDefault(u => email.Equals(u.Email) && password.Equals(u.Password));
+            userRepository = new UserRepository();
+            var user = userRepository.GetAll().FirstOrDefault(u => email.Equals(u.Email) && password.Equals(u.Password));
             return user;
         }
     }

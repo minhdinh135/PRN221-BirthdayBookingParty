@@ -2,7 +2,7 @@
 @model PRN221_BirthdayBookingParty.Pages.PackageManagementModel
 @{
     var isHost = HttpContext.Session.Keys.Contains("HOST");
-}
+	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
 
 <div class="container mt-4">
     <h1 class="text-center mb-4">Package List</h1>
@@ -41,3 +41,4 @@
         </div>
     </div>
 </div>
+}
