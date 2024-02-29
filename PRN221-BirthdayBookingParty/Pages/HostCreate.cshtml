@@ -1,0 +1,46 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.HostCreateModel
+@{
+        <div class="container mt-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Host Create</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST">
+                <div class="mb-3">
+                        <label for="name" class="form-label">FullName</label>
+                        <input type="text" asp-for="FullName" id="name" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                            <label for="address" class="form-label">Home Address</label>
+                                    <input type="text" asp-for="Address" id="address" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                        <label for="phone" class="form-label">Telephone</label>
+                        <input type="tel" asp-for="Telephone" id="phone" class="form-control" required />
+                </div>
+
+                    <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                                    <input type="password" asp-for="Password" id="password" class="form-control" required />
+                    </div>
+
+                <div class="mb-3">
+                        <label for="mail" class="form-label">EmailAddress</label>
+                        <input type="email" asp-for="EmailAddress" id="mail" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                        <label for="birthday" class="form-label">Birthday</label>
+                        <input type="date" asp-for="Birthday" id="birthday" class="form-control" />
+                </div>
+                    <button type="submit" class="btn btn-danger">Create</button>
+                    <a asp-page="/HostManagement" class="btn btn-primary">Cancel</a>                 
+                </form>
+                                </div>
+                        </div>
+                    </div>
+}
