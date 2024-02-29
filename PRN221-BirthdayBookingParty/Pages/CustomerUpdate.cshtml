@@ -1,0 +1,37 @@
+﻿@page
+@model NguyenHoangLamRazorPages.Pages.CustomerUpdateModel
+@{
+        <div class="container mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Customer Update</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                <div class="mb-3">
+            <input type="hidden" asp-for="UserId" class="form-control"/>
+                <label for="name" class="form-label">FullName</label>
+                <input type="text" asp-for="FullName" id="name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+                <label for="phone" class="form-label">Telephone</label>
+                <input type="tel" asp-for="Telephone" id="phone" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+                <label for="mail" class="form-label">EmailAddress</label>
+                <input type="email" asp-for="EmailAddress" id="mail" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+                <label for="birthday" class="form-label">Birthday</label>
+                <input type="date" asp-for="Birthday" id="birthday" class="form-control" />
+        </div>
+            <button type="submit" class="btn btn-danger">Update</button>
+            <a asp-page="/ViewCustomerList" class="btn btn-primary">Cancel</a>                 
+        </form>
+                        </div>
+                    </div>
+                </div>
+}
