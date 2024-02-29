@@ -2,7 +2,7 @@
 
 using Models;
 
-namespace Service.Interfaces
+namespace Services.Interfaces
 {
 	public interface IPackageService
 	{

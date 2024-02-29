@@ -1,0 +1,27 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.RoomManagementModel
+@{
+		<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>RoomID</th>
+							<th>Capacity</th>
+							<th>RoomStatus</th>
+							<th colspan="2">Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+			@foreach (var Room in Model.Rooms)
+			{
+											<tr>
+												<td>@Room.RoomId</td>
+												<td>@Room.Capacity</td>
+												<td>@Room.RoomStatus</td>
+														<td><a class="btn btn-primary" asp-page="/RoomUpdate/@Room.RoomId">Update</a></td>
+																<td><a class="btn btn-danger" asp-route-id="@Room.RoomId" asp-page="/RoomDelete">Delete</a></td>
+											</tr>
+			}
+					</tbody>
+				</table>
+}

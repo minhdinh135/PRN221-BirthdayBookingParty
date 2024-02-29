@@ -1,8 +1,8 @@
 ﻿using Models;
 using Repositories.Interfaces;
-using Service.Interfaces;
+using Services.Interfaces;
 
-namespace Service
+namespace Services
 {
 	public class PackageService : IPackageService
 	{

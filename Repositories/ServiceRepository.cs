@@ -1,13 +1,14 @@
 ﻿using Models;
+using Repositories.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Interfaces
+namespace Repositories
 {
-    public interface IUserRepository : IRepositoryBase<User>
-    {
-    }
+	public class ServiceRepository : RepositoryBase<Service>
+	{
+	}
 }
