@@ -1,36 +1,47 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.Shared.CustomerManagementModel
 @{
-		<table class="table table-striped table-bordered">
-			<thead>
-				<tr>
-					<th>UserID</th>
-					<th>Full Name</th>
-					<th>Telephone</th>
-					<th>Email Address</th>
-					<th>Home Address</th>
-					<th>Birthday</th>
-					<th>Status</th>
-					<th colspan="2">Action</th>
-				</tr>
-			</thead>
-
-			<tbody>
-			@foreach (var user in Model.Users)
-			{
-							<tr>
-								<td>@user.UserId</td>
-								<td>@user.FullName</td>
-								<td>@user.Phone</td>
-								<td>@user.Email</td>
-								<td>@user.Address</td>
-								<td>@user.Birthday</td>
-								<td>@user.Status</td>
-								<td><a class="btn btn-primary" asp-page="/UserUpdate/@user.UserId">Update</a></td>
-								<td><a class="btn btn-danger" asp-route-id="@user.UserId" asp-page="/CustomerDelete">Delete</a></td>
-							</tr>
-			}
-			</tbody>
-		</table>
-
+    var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
 }
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Customer Management</h1>
+    <div class="row justify-content-center">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Telephone</th>
+                            <th>Email Address</th>
+                            <th>Birthday</th>
+                            <th>Status</th>
+                            @if (isAdmin)
+                            {
+                                    <th colspan="2">Action</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.Users)
+                        {
+                                <tr>
+                                    <td>@user.FullName</td>
+                                    <td>@user.Phone</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Birthday</td>
+                                    <td>@user.Status</td>
+                                @if (isAdmin)
+                                {
+                                            <td><a class="btn btn-primary" asp-page="/CustomerUpdate" asp-route-id="@user.UserId">Update</a></td>
+                                            <td><a class="btn btn-danger" asp-page="/CustomerDelete" asp-route-id="@user.UserId">Delete</a></td>
+                                }
+                                </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
