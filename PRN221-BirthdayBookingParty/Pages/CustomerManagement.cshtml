@@ -34,7 +34,7 @@
                                     <td>@user.Status</td>
                                 @if (isAdmin)
                                 {
-                                            <td><a class="btn btn-primary" asp-page="/UserUpdate" asp-route-id="@user.UserId">Update</a></td>
+                                            <td><a class="btn btn-primary" asp-page="/CustomerUpdate" asp-route-id="@user.UserId">Update</a></td>
                                             <td><a class="btn btn-danger" asp-page="/CustomerDelete" asp-route-id="@user.UserId">Delete</a></td>
                                 }
                                 </tr>

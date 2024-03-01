@@ -1,0 +1,16 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.HostDeleteModel
+@{
+        <div class="container mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Delete Confirmation</h1>
+                        <p class="card-text">Are you sure you want to delete customer with name: <strong>@Model.user.FullName</strong>?</p>
+                        <form method="POST">
+                            <button asp-route-id="@Model.user.UserId" type="submit" class="btn btn-danger">OK</button>
+                                <a asp-page="/HostManagement" class="btn btn-primary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+}
