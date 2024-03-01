@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories;
 using Repositories.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace NguyenHoangLamRazorPages.Pages
 {
@@ -13,10 +14,15 @@ namespace NguyenHoangLamRazorPages.Pages
         [BindProperty]
         public string FullName { get; set; }
         [BindProperty]
+        [Phone]
         public string Telephone { get; set; }
         [BindProperty]
+        [EmailAddress]
         public string EmailAddress { get; set; }
         [BindProperty]
+        public int RoleId { get; set; }
+        [BindProperty]
+        [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
         private IRepositoryBase<User> _userRepository;
@@ -35,6 +41,7 @@ namespace NguyenHoangLamRazorPages.Pages
                 Telephone = user.Phone;
                 EmailAddress = user.Email;
                 Birthday = user.Birthday;
+                RoleId = user.RoleId;
             }
         }
 
@@ -57,6 +64,7 @@ namespace NguyenHoangLamRazorPages.Pages
 			userToUpdate.Email = EmailAddress;
 			userToUpdate.Birthday = Birthday;
 			userToUpdate.Status = 1;
+            userToUpdate.RoleId = 3;
 
             _userRepository.Update(userToUpdate);
 
