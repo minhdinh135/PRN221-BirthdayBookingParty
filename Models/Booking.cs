@@ -7,6 +7,9 @@ public partial class Booking
 {
     public int BookingId { get; set; }
     public DateTime BookingDate { get; set; }
+
+    public DateTime PartyDateTime { get; set; }
+
     public string BookingStatus { get; set; }
     public string Feedback { get; set; }
 
