@@ -1,0 +1,38 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.BookingCreateModel
+@{
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Booking Create</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label asp-for="BookingDate" class="form-label">Booking Date</label>
+                        <input type="date" asp-for="BookingDate" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PartyDateTime" class="form-label">Party Time</label>
+                        <input type="date" asp-for="PartyDateTime" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Status" class="form-label">Booking Status</label>
+                        <input type="text" asp-for="Status" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label">Room ID</label>
+                        <input type="text" asp-for="RoomId" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PackageId" class="form-label">Package ID</label>
+                        <input type="text" asp-for="PackageId" class="form-control" required />
+                    </div>
+                    
+                    <button type="submit" class="btn btn-danger">Create</button>
+                    <a asp-page="/BookingList" class="btn btn-primary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}
