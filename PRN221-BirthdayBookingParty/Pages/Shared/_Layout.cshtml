@@ -54,30 +54,42 @@
 
                 <div class="collapse navbar-collapse" id="navbarsFurni">
                     <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                        <li class="nav-item active">
+						@if (!isAdmin && !isHost && !isCustomer)
+						{
+						<li class="nav-item active">
 							<a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-							@if(!isAdmin && !isHost){
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/PrivacyPolicy">Privacy Policy</a></li>
-							}
-                        </li>
-						@if (isAdmin){
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/RoomManagement">Room</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package</a></li>
-					}
+						</li>
+						}
+						
+						@if (isAdmin)
+						{
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/RoomManagement">Room</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package</a></li>
+						}
 
-						@if (isCustomer){
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/ProfileCustomer">Profile</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package List</a></li>
-					}
+						@if (isCustomer)
+						{
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/ProfileCustomer">Profile</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package List</a></li>
+						}
 
 						@if (isHost)
 						{
+<<<<<<< HEAD
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageList">Package List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/Room">Rooms List</a></li>
+						}
+				</ul>
+=======
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package List</a></li>
@@ -85,6 +97,7 @@
 					}
 
                     </ul
+>>>>>>> 5f110c8328ea46305b3ac9ef60a7f751c450210f
                 </div>
             </div>
 		@if (isAdmin || isCustomer || isHost)
