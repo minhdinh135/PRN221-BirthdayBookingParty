@@ -19,6 +19,7 @@
                                 <th>Room ID</th>
                             }                        
                             <th>Booking Date</th>
+                            <th>Party Time</th>
                             <th>Booking Status</th>
                             <th>Feedback</th>
                             <th>Package ID</th>
@@ -38,19 +39,21 @@
                                          <td>@booking.RoomId</td>
                                     }                      
                                     <td>@booking.BookingDate</td>
+                                    <td>@booking.PartyDateTime</td>
                                     <td>@booking.BookingStatus</td>
                                     <td>@booking.Feedback</td>
                                     <td>@booking.PackageId</td>
                                 @if (isCustomer)
                                 {
-                                            <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
-                                            <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
+                                    <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
+                                    <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
                                 }
                                 </tr>
                         }
-                    </tbody>
+                            <a class="btn btn-primary" asp-page="/BookingCreate">Create</a>
+                        </tbody>
                 </table>
-            </div>
+             </div>
         </div>
     </div>
 </div>
