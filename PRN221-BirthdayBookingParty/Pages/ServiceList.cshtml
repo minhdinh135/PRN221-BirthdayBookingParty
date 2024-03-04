@@ -14,7 +14,7 @@
 						<tr>
 							<th>#</th>
 							<th>Name</th>
-							<th>Package name</th>
+							<th>Package type</th>
 							@if (!isCustomer)
 							{
 								<th colspan="2">Action</th>
@@ -27,7 +27,7 @@
 				<tr>
 					<td>@(serviceIndex++)</td>
 					<td>@service.ServiceName</td>
-					<td>@service.PackageId</td>
+					<td>@Model.PackageTypes[service.ServiceId]</td>
 					@if (!isCustomer)
 					{
 						<td><a class="btn btn-primary" asp-page="/PackageUpdate/@service.PackageId">Update</a></td>
