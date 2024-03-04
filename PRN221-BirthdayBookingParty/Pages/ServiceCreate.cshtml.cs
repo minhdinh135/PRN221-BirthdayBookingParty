@@ -45,7 +45,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             try
             {
                 serviceRepository.Add(service);
-                return RedirectToPage("/ServiceList");
+                return RedirectToPage("/ServiceManagement");
             }
             catch (Exception ex)
             {

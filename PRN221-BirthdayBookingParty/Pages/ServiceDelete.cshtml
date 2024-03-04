@@ -1,24 +1,17 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.ServiceDeleteModel
 @{
-    ViewData["Title"] = "Delete Service";
+         <div class="container mt-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="card-title">Delete Confirmation</h1>
+                                        <p class="card-text">Are you sure you want to delete service with name: <strong>@Model.Service.ServiceName</strong>?</p>
+                                <form method="POST">
+                                                <button asp-route-id="@Model.Service.ServiceName" type="submit" class="btn btn-danger">OK</button>
+                                        <a asp-page="/ServiceManagement" class="btn btn-primary">Cancel</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 }
-<br>
-<h1>Delete Service</h1>
-<br>
-<h3>Are you sure you want to delete this service?</h3>
-<br>
-<div>
-    <form method="post">
-        <input type="hidden" asp-for="Service.ServiceId" />
-        <div>
-            <label asp-for="Service.ServiceName"></label>
-            <input asp-for="Service.ServiceName" disabled class="form-control" />
-        </div>
-        <br>
-        <div>
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            <a asp-page="./ServiceList">Back to List</a>
-        </div>
-    </form>
-</div>
+

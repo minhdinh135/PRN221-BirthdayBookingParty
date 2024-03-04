@@ -1,0 +1,29 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.PackageUpdateModel
+@{
+            <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Package Update</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="PackageName" class="form-label">Package Name</label>
+                            <input type="text" asp-for="PackageName" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="PackageType" class="form-label">Package Type</label>
+                            <input type="text" asp-for="PackageType" class="form-control" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a asp-page="/PackageManagement" class="btn btn-secondary">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+}
+
+
