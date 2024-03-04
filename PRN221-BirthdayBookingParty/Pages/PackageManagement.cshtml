@@ -14,8 +14,8 @@
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
                             <th>Type</th>
+                            <th>Description</th>
                             @if (isHost)
                             {
                                     <th colspan="2">Action</th>
@@ -27,8 +27,8 @@
                         {
                                 <tr>
                                     <td>@(packageIndex++)</td>
-                                    <td>@package.PackageName</td>
                                     <td>@package.PackageType</td>
+                                    <td>@package.PackageName</td>
                                 @if (isHost)
                                 {
                                             <td><a class="btn btn-primary" asp-page="/PackageUpdate" asp-route-id="@package.PackageId">Update</a></td>

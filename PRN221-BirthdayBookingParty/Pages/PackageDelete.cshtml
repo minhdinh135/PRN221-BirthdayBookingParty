@@ -1,0 +1,16 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.PackageDeleteModel
+@{
+        <div class="container mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title">Delete Confirmation</h1>
+                                    <p class="card-text">Are you sure you want to delete package with type: <strong>@Model.package.PackageType</strong>?</p>
+                            <form method="POST">
+                                    <button asp-route-id="@Model.package.PackageId" type="submit" class="btn btn-danger">OK</button>
+                                    <a asp-page="/PackageManagement" class="btn btn-primary">Cancel</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+}
