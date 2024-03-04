@@ -1,0 +1,21 @@
+﻿@page "/Rooms/Create"
+@model PRN221_BirthdayBookingParty.Pages.RoomCreateModel
+<br>
+<h1>Create New Room</h1>
+<br>
+<form method="post">
+    <div class="form-group">
+        <label for="RoomName">Capacity:</label>
+        <input type="text" class="form-control" id="RoomName" name="RoomName" required>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="RoomType">Room Type:</label>
+        <input type="text" class="form-control" id="RoomType" name="RoomType" required>
+    </div>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-page="./RoomManagement">Back to List</a>
+    </div>
+</form>

@@ -14,6 +14,7 @@ namespace Repositories.Impl
         BookingPartyContext context;
         DbSet<T> set;
 
+
         public RepositoryBase()
         {
             context = new BookingPartyContext();

@@ -37,6 +37,10 @@
                         }
                     </tbody>
                 </table>
+                @if (isHost)
+                {
+                    <a class="btn btn-primary" asp-page="/RoomCreate">Create</a>
+                }
             </div>
         </div>
     </div>
