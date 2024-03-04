@@ -1,0 +1,24 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.ServiceDeleteModel
+@{
+    ViewData["Title"] = "Delete Service";
+}
+<br>
+<h1>Delete Service</h1>
+<br>
+<h3>Are you sure you want to delete this service?</h3>
+<br>
+<div>
+    <form method="post">
+        <input type="hidden" asp-for="Service.ServiceId" />
+        <div>
+            <label asp-for="Service.ServiceName"></label>
+            <input asp-for="Service.ServiceName" disabled class="form-control" />
+        </div>
+        <br>
+        <div>
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-page="./ServiceList">Back to List</a>
+        </div>
+    </form>
+</div>

@@ -14,7 +14,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(20));
 
 builder.Services.AddScoped<IRepositoryBase<User>, UserRepository>();
-
+builder.Services.AddScoped<ServiceRepository>();
+builder.Services.AddScoped<PackageRepository>();
 
 builder.Services.AddDbContext<BookingPartyContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingPartyDB"))
@@ -23,7 +24,8 @@ builder.Services.AddDbContext<BookingPartyContext>(
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

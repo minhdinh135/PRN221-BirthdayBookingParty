@@ -51,11 +51,17 @@
                                 }
                                 </tr>
                         }
-                            <a class="btn btn-primary" asp-page="/BookingCreate">Create</a>
+                            
                         </tbody>
                 </table>
+                    @if (isCustomer)
+                    {
+                        <a class="btn btn-primary" asp-page="/BookingCreate">Create</a>
+                    }
              </div>
         </div>
     </div>
+        
 </div>
+    
 }

@@ -1,6 +1,4 @@
-﻿
-
-using Models;
+﻿using Models;
 
 namespace Services.Interfaces
 {
