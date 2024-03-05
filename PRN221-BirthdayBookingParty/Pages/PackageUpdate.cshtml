@@ -9,7 +9,8 @@
                 <div class="card-body">
                     <form method="POST">
                         <div class="mb-3">
-                            <label for="PackageName" class="form-label">Package Name</label>
+                            <input type="hidden" asp-for="PackageId" class="form-control" />
+                            <label for="PackageName" class="form-label">Description</label>
                             <input type="text" asp-for="PackageName" class="form-control" required />
                         </div>
 
