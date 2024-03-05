@@ -37,7 +37,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 BookingDate = DateTime.Now,
                 PartyDateTime = PartyDateTime,
-                BookingStatus = "2",
+                BookingStatus = "Pending",
                 PackageId = PackageId,
                 Feedback = "N/A",
                 RoomId = RoomId,
