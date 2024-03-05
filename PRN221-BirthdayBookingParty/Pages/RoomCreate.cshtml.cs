@@ -1,5 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
+using Repositories.Interfaces;
+using Repositories;
+using System.Net.Mail;
+using System.Net;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
@@ -9,9 +14,22 @@ namespace PRN221_BirthdayBookingParty.Pages
         public int Capacity { get; set; }
         public string RoomStatus { get; set; }
 
-
-        public void OnGet()
+        private IRepositoryBase<Room> _roomRepository;
+        public RoomCreateModel()
         {
+            _roomRepository = new RoomRepository();
+        }
+        public IActionResult OnPost()
+        {
+
+            Room room = new Room
+            {
+                Capacity = Capacity,    
+                RoomStatus = Request.Form["RoomStatus"],
+            };
+
+            _roomRepository.Add(room);
+            return RedirectToPage("/RoomManagement");
         }
     }
 }
