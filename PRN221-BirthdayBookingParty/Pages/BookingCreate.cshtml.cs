@@ -12,19 +12,35 @@ namespace PRN221_BirthdayBookingParty.Pages
     {
         public DateTime BookingDate { get; set; }
         public DateTime PartyDateTime { get; set; }
-        public int Status { get; set; }
-        public int PackageId { get; set; }
+        public string Status { get; set; }
+        public List<Package> Packages { get; set; } = new List<Package>();
         public int RoomId { get; set; }
 
+        public List<Room> Rooms { get; set; } = new List<Room>();
+        public List<Service> Services { get; set; } = new List<Service>();
+
+        public List<Service> SelectedServices { get; set; } = new List<Service>();
+
         private BookingRepository bookingRepository;
+        private RoomRepository roomRepository;
+        private ServiceRepository serviceRepository;
+        private PackageRepository packageRepository;
 
         public BookingCreateModel()
         {
             bookingRepository = new BookingRepository();
+            roomRepository = new RoomRepository();
+            serviceRepository = new ServiceRepository();
+            packageRepository = new PackageRepository();
         }
         public void OnGet()
         {
+            Packages = packageRepository.GetAll();
+            Rooms = roomRepository.GetAll();
+            Services = serviceRepository.GetAll();
             BookingDate = DateTime.Now;
+            Status = "Pending";
+            
         }
 
         public IActionResult OnPost()
@@ -35,6 +51,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 
             Booking booking = new Booking
             {
+                Services = SelectedServices,
                 BookingDate = DateTime.Now,
                 PartyDateTime = PartyDateTime,
                 BookingStatus = "Pending",
