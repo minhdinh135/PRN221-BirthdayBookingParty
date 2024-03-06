@@ -1,6 +1,12 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.BookingUpdateModel
 @{
+    var isHost = HttpContext.Session.Keys.Contains("HOST");
+    var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+
+    var canEditFeedback = Model.BookingStatus == "Done";
+
+
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">
@@ -8,9 +14,46 @@
             </div>
             <div class="card-body">
                 <form method="POST">
-                    <div class="form-group">
+                    <input type="hidden" asp-for="BookingId" class="form-control" />
+                    @if ((isCustomer && canEditFeedback))
+                    {
+            <div class="form-group"> 
+                <div class="form-group">
+                    <label for="Feedback">Feedback:</label>
+                    <textarea asp-for="Feedback" class="form-control"></textarea>
+                </div>
+                <div>
                         <label for="BookingId">Status:</label>
-                        <input type="hidden" asp-for="BookingId" class="form-control" />
+                        <input type="text" asp-for="BookingStatus" id="BookingId" class="form-control" disabled/>
+                </div>          
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Update</button>
+                    }
+                    
+                    @if(isCustomer && !canEditFeedback){
+            <div class="form-group"> 
+                <div class="form-group">
+                    <label for="Feedback">Feedback:</label>
+                    <textarea asp-for="Feedback" class="form-control" disabled></textarea>
+                </div>
+                <div>
+                        <label for="BookingId">Status:</label>
+                        <input type="text" asp-for="BookingStatus" id="BookingId" class="form-control" disabled/>
+                 </div>
+            </div>
+            <br>
+                    }
+
+
+                    @if (isHost) {
+                            <div>
+                                <label for="BookingId"></label>
+                                <input type="hidden" asp-for="Feedback" id="BookingId" class="form-control" disabled/>
+                            </div>
+                            <div class="form-group">
+                             <label for="BookingId">Status:</label>
+                            <input type="hidden" asp-for="BookingId" class="form-control" />
                         <select class="form-control" asp-for="BookingStatus" name="BookingStatus" required>
                             <option value="Deny">Deny</option>
                             <option value="Accept">Accept</option>
@@ -20,6 +63,8 @@
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary">Update</button>
+                        }
+
                     <a asp-page="/BookingList" class="btn btn-secondary">Back to List</a>
                 </form>
             </div>

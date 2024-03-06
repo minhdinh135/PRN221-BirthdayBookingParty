@@ -51,6 +51,15 @@ namespace PRN221_BirthdayBookingParty.Pages
             Packages = packageRepository.GetAll();
             Rooms = roomRepository.GetAll();
             Services = serviceRepository.GetAll();
+
+            if (booking != null)
+            {
+                SelectedServices = bookingServiceRepository
+                    .GetAll()
+                    .Where(bs => bs.BookingId == booking.BookingId)
+                    .Select(bs => bs.Service)
+                    .ToList();
+            }
         }
 
         public IActionResult OnPost(int[] serviceId1, int[] serviceId2, int[] serviceId3)

@@ -46,13 +46,6 @@
                     <div class="mb-3">
                         <label asp-for="Packages[2]" class="form-label">Decoration</label>
                         <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                            @foreach (var service in @Model.Services)
-                            {
-                                @if (Model.Packages[2].PackageId == service.PackageId)
-                                {
-                                    <option value="@service.ServiceId">@service.ServiceName</option>
-                                }
-                            }
                         </select>
                     </div>
 

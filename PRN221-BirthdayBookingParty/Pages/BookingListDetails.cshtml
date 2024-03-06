@@ -1,6 +1,9 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.BookingListDetailsModel
 @{
+    var isHost = HttpContext.Session.Keys.Contains("HOST");
+    var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">
@@ -29,26 +32,28 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Package</label>
+                        <label class="form-label">Package:</label>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Packages[0]" class="form-label">Menu</label>
+                        <label asp-for="Packages[0]" class="form-label">- Menu: </label>
                         <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Packages[1]" class="form-label">Entertainment</label>
+                        <label asp-for="Packages[1]" class="form-label">- Entertainment: </label>
                         <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Packages[2]" class="form-label">Decoration</label>
+                        <label asp-for="Packages[2]" class="form-label">- Decoration: </label>
                         <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                     </div>
 
-
-                    <button type="submit" class="btn btn-danger">Update</button>
+                    @if (isCustomer)
+                    {
+                        <button type="submit" class="btn btn-danger">Update</button>
+                    }
                     <a asp-page="/BookingList" class="btn btn-primary">Back</a>
                 </form>
             </div>
