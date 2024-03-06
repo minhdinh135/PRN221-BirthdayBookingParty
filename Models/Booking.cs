@@ -14,7 +14,8 @@ public partial class Booking
     public string Feedback { get; set; }
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
-    public virtual ICollection<Service> Services { get; set; }
+
+    public virtual ICollection<BookingService> BookingServices { get; set; } = new List<BookingService>();
 
     public int UserId { get; set; }
     public virtual User User { get; set; }
