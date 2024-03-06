@@ -1,20 +1,21 @@
 ﻿@page
-@model PRN221_BirthdayBookingParty.Pages.BookingCreateModel
+@model PRN221_BirthdayBookingParty.Pages.BookingListDetailsModel
 @{
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Booking Create</h3>
+                <h3 class="card-title">Booking Details</h3>
             </div>
             <div class="card-body">
                 <form method="POST">
+                    <input type="hidden" asp-for="BookingId" class="form-control" />
                     <div class="mb-3">
                         <label asp-for="BookingDate" class="form-label">Booking Date</label>
-                        <input type="date" asp-for="BookingDate" class="form-control" disabled />
+                        <input type="date" asp-for="BookingDate" class="form-control" disabled/>
                     </div>
                     <div class="mb-3">
                         <label asp-for="PartyDateTime" class="form-label">Party Time</label>
-                        <input type="date" asp-for="PartyDateTime" class="form-control" />
+                        <input type="date"  asp-for="PartyDateTime" class="form-control"/>
                     </div>
                     <div class="mb-3">
                         <label asp-for="RoomId" class="form-label">Room Capacity</label>
@@ -33,32 +34,22 @@
 
                     <div class="mb-3">
                         <label asp-for="Packages[0]" class="form-label">Menu</label>
-                        <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                        </select>
+                        <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Packages[1]" class="form-label">Entertainment</label>
-                        <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                        </select>
+                        <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Packages[2]" class="form-label">Decoration</label>
-                        <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                            @foreach (var service in @Model.Services)
-                            {
-                                @if (Model.Packages[2].PackageId == service.PackageId)
-                                {
-                                    <option value="@service.ServiceId">@service.ServiceName</option>
-                                }
-                            }
-                        </select>
+                        <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                     </div>
 
 
-                    <button type="submit" class="btn btn-danger">Create</button>
-                    <a asp-page="/BookingList" class="btn btn-primary">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Update</button>
+                    <a asp-page="/BookingList" class="btn btn-primary">Back</a>
                 </form>
             </div>
         </div>

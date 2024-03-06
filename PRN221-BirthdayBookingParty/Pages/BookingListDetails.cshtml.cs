@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Models;
 using Repositories;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [BindProperties]
-    public class BookingCreateModel : PageModel
+    public class BookingListDetailsModel : PageModel
     {
+        public int BookingId { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime PartyDateTime { get; set; }
         public string Status { get; set; }
@@ -28,7 +26,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         private PackageRepository packageRepository;
         private BookingServiceRepository bookingServiceRepository;
 
-        public BookingCreateModel()
+        public BookingListDetailsModel()
         {
             bookingRepository = new BookingRepository();
             roomRepository = new RoomRepository();
@@ -36,48 +34,59 @@ namespace PRN221_BirthdayBookingParty.Pages
             packageRepository = new PackageRepository();
             bookingServiceRepository = new BookingServiceRepository();
         }
-        public void OnGet()
+
+        public void OnGet(int id)
         {
+            Booking booking = bookingRepository.GetAll().FirstOrDefault(b => b.BookingId == id);
+            
+            if(booking != null)
+            {
+                BookingId = booking.BookingId;
+                PartyDateTime = booking.PartyDateTime;
+                Status = booking.BookingStatus;
+                BookingDate = booking.BookingDate;
+                RoomId = booking.RoomId;
+            }
+
             Packages = packageRepository.GetAll();
             Rooms = roomRepository.GetAll();
             Services = serviceRepository.GetAll();
-            BookingDate = DateTime.Now;
-            Status = "Pending";
-            
         }
 
         public IActionResult OnPost(int[] serviceId1, int[] serviceId2, int[] serviceId3)
         {
-            string userString = HttpContext.Session.GetString("CUSTOMER");
-            var user = JsonSerializer.Deserialize<User>(userString);
-            int userId = user.UserId;
+            Booking bookingToUpdate = bookingRepository.GetAll().FirstOrDefault(b => b.BookingId == BookingId);
 
-            Booking booking = new Booking
+            if (bookingToUpdate != null)
             {
-                BookingDate = DateTime.Now,
-                PartyDateTime = PartyDateTime,
-                BookingStatus = "Pending",
-                Feedback = "N/A",
-                RoomId = RoomId,
-                UserId = userId
-            };
+                bookingToUpdate.PartyDateTime = PartyDateTime;
+                bookingToUpdate.RoomId = RoomId;
+                
+            }
 
-            bookingRepository.Add(booking);
+            List<BookingService> existingBookingServices = bookingServiceRepository.GetAll().Where(bs => bs.BookingId == bookingToUpdate.BookingId).ToList();
+            
+            foreach (var bookingService in existingBookingServices)
+            {
+                bookingServiceRepository.Delete(bookingService); 
+            }
 
             foreach (Service service in SelectedServices)
             {
                 BookingService bookingService = new BookingService
                 {
-                    BookingId = booking.BookingId,
+                    BookingId = bookingToUpdate.BookingId,
                     ServiceId = service.ServiceId,
                 };
 
                 bookingServiceRepository.Add(bookingService);
             }
 
-            AddSelectedServices(serviceId1, booking.BookingId);
-            AddSelectedServices(serviceId2, booking.BookingId);
-            AddSelectedServices(serviceId3, booking.BookingId);
+            AddSelectedServices(serviceId1, bookingToUpdate.BookingId);
+            AddSelectedServices(serviceId2, bookingToUpdate.BookingId);
+            AddSelectedServices(serviceId3, bookingToUpdate.BookingId);
+
+            bookingRepository.Update(bookingToUpdate);
 
             return RedirectToPage("/BookingList");
         }
@@ -98,8 +107,5 @@ namespace PRN221_BirthdayBookingParty.Pages
                 }
             }
         }
-
-
     }
-    
 }
