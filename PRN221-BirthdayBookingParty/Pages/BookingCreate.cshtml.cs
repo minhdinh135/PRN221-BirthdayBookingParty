@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Models;
 using Repositories;
 using System.ComponentModel.DataAnnotations;
@@ -63,6 +64,10 @@ namespace PRN221_BirthdayBookingParty.Pages
             bookingRepository.Add(booking);
 
             return RedirectToPage("/BookingList");
+
         }
+
+
     }
+    
 }
