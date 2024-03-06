@@ -15,6 +15,7 @@
 							<th>#</th>
 							<th>Name</th>
 							<th>Package Type</th>
+							<th>Price</th>
 							@if (!isCustomer)
 							{
 								<th colspan="2">Action</th>
@@ -28,6 +29,7 @@
 					<td>@(serviceIndex++)</td>
 					<td>@service.ServiceName</td>
 					<td>@Model.PackageTypes[service.ServiceId]</td>
+					<td>@service.Price</td>
 					@if (!isCustomer)
 					{
 						<td><a class="btn btn-primary" asp-route-id="@service.ServiceId" asp-page="/ServiceUpdate">Update</a></td>

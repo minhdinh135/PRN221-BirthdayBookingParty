@@ -22,7 +22,6 @@
                             <th>Party Time</th>
                             <th>Booking Status</th>
                             <th>Feedback</th>
-                            <th>Package ID</th>
                                 @if (isCustomer)
                             {
                                     <th colspan="2">Action</th>
@@ -43,7 +42,6 @@
                                     <td>@booking.PartyDateTime</td>
                                     <td>@booking.BookingStatus</td>
                                     <td>@booking.Feedback</td>
-                                    <td>@booking.PackageId</td>
                                 @if (isCustomer)
                                 {
                                     <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
