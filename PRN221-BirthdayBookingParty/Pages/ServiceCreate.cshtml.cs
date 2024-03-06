@@ -12,6 +12,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 
         public int PackageId { get; set; }
 
+        public decimal Price { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
 
         private ServiceRepository serviceRepository;
@@ -40,6 +41,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 PackageId = PackageId,
                 ServiceName = ServiceName,
+                Price = Price,
             };
 
             try

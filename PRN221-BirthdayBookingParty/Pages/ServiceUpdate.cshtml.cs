@@ -16,6 +16,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         public int PackageId { get; set; }
         
         public string PackageType { get; set; }
+        public decimal Price { get; set; }
 
         public List<Package> Packages { get; set; } = new List<Package>();
         private IRepositoryBase<Service> _serviceRepository;
@@ -36,6 +37,7 @@ namespace PRN221_BirthdayBookingParty.Pages
                 PackageId = service.PackageId;
                 ServiceId = service.ServiceId;
                 ServiceName = service.ServiceName;
+                Price = service.Price;
             }
         }
 
@@ -47,6 +49,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             serviceToUpdate.ServiceId = ServiceId;
             serviceToUpdate.ServiceName = ServiceName;
             serviceToUpdate.PackageId = PackageId;
+            serviceToUpdate.Price = Price;
 
             _serviceRepository.Update(serviceToUpdate);
 
