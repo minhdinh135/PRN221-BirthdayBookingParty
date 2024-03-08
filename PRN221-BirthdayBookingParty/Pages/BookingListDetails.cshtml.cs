@@ -12,6 +12,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         public DateTime BookingDate { get; set; }
         public DateTime PartyDateTime { get; set; }
         public string Status { get; set; }
+        public string Feedback { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
         public int RoomId { get; set; }
 
@@ -46,6 +47,7 @@ namespace PRN221_BirthdayBookingParty.Pages
                 Status = booking.BookingStatus;
                 BookingDate = booking.BookingDate;
                 RoomId = booking.RoomId;
+                Feedback = booking.Feedback;
             }
 
             Packages = packageRepository.GetAll();
@@ -70,7 +72,8 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 bookingToUpdate.PartyDateTime = PartyDateTime;
                 bookingToUpdate.RoomId = RoomId;
-                
+                bookingToUpdate.Feedback = Feedback;
+
             }
 
             List<BookingService> existingBookingServices = bookingServiceRepository.GetAll().Where(bs => bs.BookingId == bookingToUpdate.BookingId).ToList();

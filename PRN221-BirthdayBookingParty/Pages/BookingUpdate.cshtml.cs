@@ -13,8 +13,6 @@ namespace PRN221_BirthdayBookingParty.Pages
         public int BookingId { get; set; }
         [BindProperty]
         public string BookingStatus { get; set; }
-        [BindProperty]
-        public string Feedback { get; set; }
 
         public IRepositoryBase<Booking> _bookingRepository;
         public List<Booking> Bookings { get; set; } = new List<Booking>();
@@ -30,7 +28,6 @@ namespace PRN221_BirthdayBookingParty.Pages
             if (booking != null)
             {
                 BookingId = booking.BookingId;
-                Feedback = booking.Feedback;
                 BookingStatus = booking.BookingStatus;
             }
         }
@@ -45,7 +42,6 @@ namespace PRN221_BirthdayBookingParty.Pages
 
             bookingToUpdate.BookingId = BookingId;
             bookingToUpdate.BookingStatus = BookingStatus;
-            bookingToUpdate.Feedback = Feedback;
 
             _bookingRepository.Update(bookingToUpdate);
 
