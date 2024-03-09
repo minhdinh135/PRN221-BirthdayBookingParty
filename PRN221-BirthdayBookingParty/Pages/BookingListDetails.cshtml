@@ -4,6 +4,9 @@
     var isHost = HttpContext.Session.Keys.Contains("HOST");
     var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
     var canEditFeedback = Model.Status == "Done";
+    var cannotEditPartyTimeAndServiceAndCapacity = Model.Status == "Accept";
+    var cannotEditAnything = Model.Status == "Deny";
+    var canUpdate = Model.Status == "Pending";
 
 
     <div class="container mt-4">
@@ -14,7 +17,8 @@
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" asp-for="BookingId" class="form-control" />
-                    @if (isCustomer)
+                    <input type="hidden" asp-for="RoomId" class="form-control"/>
+                    @if (isCustomer  && canUpdate)
                     {
                                 <div class="mb-3">
                                 <label asp-for="BookingDate" class="form-label">Booking Date:</label>
@@ -25,6 +29,18 @@
                                 <label asp-for="PartyDateTime" class="form-label">Party Time:</label>
                                 <input type="date"  asp-for="PartyDateTime" class="form-control"/>
                             </div>
+                    }
+                    @if(isCustomer && !canUpdate)
+                    {
+                                  <div class="mb-3">
+                                        <label asp-for="BookingDate" class="form-label">Booking Date:</label>
+                                        <input type="date" asp-for="BookingDate" class="form-control" disabled/>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label asp-for="PartyDateTime" class="form-label">Party Time:</label>
+                                        <input type="date"  asp-for="PartyDateTime" class="form-control" disabled/>
+                                    </div>
                     }
                     @if (!isCustomer)
                     {
@@ -69,7 +85,7 @@
                           </div>
                     }
     
-                    @if (isCustomer)
+                    @if (isCustomer && canUpdate)
                     {
                               <div class="mb-3">
                                 <label asp-for="RoomId" class="form-label">Room Capacity:</label>
@@ -101,12 +117,13 @@
                                     </div> 
                     }
                    
-                    @if (!isCustomer)
+                    @if (!isCustomer || (isCustomer && canEditFeedback) || (isCustomer && cannotEditAnything) || (isCustomer && cannotEditPartyTimeAndServiceAndCapacity))
                     {
                                     <div class="mb-3">
                                         <label asp-for="RoomId" class="form-label">Room Capacity:</label>
                                         <select class="form-control" asp-for="RoomId" required disabled>
                                             <option value="">Select Capacity</option>
+                                       
                                 @foreach (var room in Model.Rooms)
                                 {
                                                         <option value="@room.RoomId">@room.Capacity</option>
@@ -119,25 +136,29 @@
 
                                             <div class="mb-3">
                                                 <label asp-for="Packages[0]" class="form-label">- Menu: </label>
-                                                <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                                                <select id="serviceId1" disabled name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label asp-for="Packages[1]" class="form-label">- Entertainment: </label>
-                                                <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                                                        <select id="serviceId2" disabled name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label asp-for="Packages[2]" class="form-label">- Decoration: </label>
-                                                <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                                                <select id="serviceId3" disabled name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                                             </div> 
                     }
 
-
-                    @if (isCustomer)
+                    @if (isCustomer && cannotEditPartyTimeAndServiceAndCapacity)
+                    {
+                                <button type="submit" class="btn btn-danger" disabled>Update</button>
+                    }
+                    @if ((isCustomer && canEditFeedback) || (isCustomer && canUpdate))
                     {
                         <button type="submit" class="btn btn-danger">Update</button>
                     }
+                    
                     <a asp-page="/BookingList" class="btn btn-primary">Back</a>
                 </form>
                 </div>

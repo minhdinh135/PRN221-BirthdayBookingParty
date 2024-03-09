@@ -11,5 +11,7 @@ public partial class Room
 
     public string RoomStatus { get; set; }
 
+    public decimal RoomPrice { get; set; }
+
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }

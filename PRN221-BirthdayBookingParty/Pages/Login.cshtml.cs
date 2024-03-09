@@ -23,32 +23,33 @@ namespace NguyenHoangLamRazorPages.Pages
         {
         }
 
-        public void OnPost(string email, string password)
+        public IActionResult OnPost(string email, string password)
         {
 			var user = userService.GetAccount(email, password);
 
             if (user == null )
             {
-				Response.Redirect("/Index");
+				return RedirectToPage("/Index");
 			}
 
             if(user.RoleId.Equals(1)) {
 				HttpContext.Session.SetString("ADMIN", JsonSerializer.Serialize(user));
-				Response.Redirect("/Index");
+                return RedirectToPage("/Index");
 			}
 
 			if(user.RoleId.Equals(2))
 			{
 				HttpContext.Session.SetString("HOST", JsonSerializer.Serialize(user));
-				Response.Redirect("/Index");
+                return RedirectToPage("/Index");
 			}
 
 			if (user.RoleId.Equals(3))
 			{
+				HttpContext.Session.SetString("CUSTOMER_NAME", user.FullName);
 				HttpContext.Session.SetString("CUSTOMER", JsonSerializer.Serialize(user));
-				Response.Redirect("/ProfileCustomer");
+                return RedirectToPage("/ProfileCustomer");
 			}
-
+			return Page();
 			//if (admin != null && string.Equals(admin.email, email, StringComparison.OrdinalIgnoreCase) &&string.Equals(admin.password, password))
 			//{
 			//    HttpContext.Session.SetString("Admin", JsonSerializer.Serialize(admin));

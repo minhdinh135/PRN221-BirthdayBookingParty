@@ -45,7 +45,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 var deletedService = _serviceService.DeleteService(id);
                 TempData["Message"] = $"Service '{deletedService.ServiceName}' deleted successfully";
-                return RedirectToPage("./Index");
+                return RedirectToPage("/ServiceManagement");
             }
             catch (ArgumentException ex)
             {

@@ -7,7 +7,7 @@
                                 <h1 class="card-title">Delete Confirmation</h1>
                                         <p class="card-text">Are you sure you want to delete service with name: <strong>@Model.Service.ServiceName</strong>?</p>
                                 <form method="POST">
-                                                <button asp-route-id="@Model.Service.ServiceName" type="submit" class="btn btn-danger">OK</button>
+                                                <button asp-route-id="@Model.Service.ServiceId" type="submit" class="btn btn-danger">OK</button>
                                         <a asp-page="/ServiceManagement" class="btn btn-primary">Cancel</a>
                                 </form>
                             </div>
