@@ -39,11 +39,11 @@ namespace PRN221_BirthdayBookingParty.Pages
         public void OnGet()
         {
             Packages = packageRepository.GetAll();
-            Rooms = roomRepository.GetAll();
+            Rooms = roomRepository.GetAll().Where(r => r.RoomStatus == "Inactive").ToList();
             Services = serviceRepository.GetAll();
             BookingDate = DateTime.Now;
             Status = "Pending";
-            
+            PartyDateTime = DateTime.Now;   
         }
 
         public IActionResult OnPost(int[] serviceId1, int[] serviceId2, int[] serviceId3)
@@ -52,6 +52,12 @@ namespace PRN221_BirthdayBookingParty.Pages
             var user = JsonSerializer.Deserialize<User>(userString);
             int userId = user.UserId;
 
+            if (!IsPartyDateTimeValid(PartyDateTime))
+            {
+                ModelState.AddModelError("PartyDateTime", "Party date and time must be at least 2 days later than the current date and time.");
+                return Page();
+            }
+
             Booking booking = new Booking
             {
                 BookingDate = DateTime.Now,
@@ -59,6 +65,7 @@ namespace PRN221_BirthdayBookingParty.Pages
                 BookingStatus = "Pending",
                 Feedback = "N/A",
                 RoomId = RoomId,
+                
                 UserId = userId
             };
 
@@ -79,6 +86,10 @@ namespace PRN221_BirthdayBookingParty.Pages
             AddSelectedServices(serviceId2, booking.BookingId);
             AddSelectedServices(serviceId3, booking.BookingId);
 
+            Room room = roomRepository.GetAll().FirstOrDefault(r => r.RoomId == RoomId);
+            room.RoomStatus = "Active";
+            roomRepository.Update(room);
+
             return RedirectToPage("/BookingList");
         }
 
@@ -98,7 +109,10 @@ namespace PRN221_BirthdayBookingParty.Pages
                 }
             }
         }
-
+        private bool IsPartyDateTimeValid(DateTime partyDateTime)
+        {
+            return partyDateTime > DateTime.Now.AddDays(2);
+        }
 
     }
     
