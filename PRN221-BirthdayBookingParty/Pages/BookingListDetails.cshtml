@@ -50,71 +50,123 @@
                             {
                                 <input type="text" asp-for="Feedback" class="form-control" disabled />
                             }
-                        </div>   
+                        </div>
 
-                    @if (isCustomer && canUpdate)
-                    {
-                        <div class="mb-3">
-                            <label asp-for="RoomId" class="form-label">Room Capacity:</label>
-                            <select class="form-control" asp-for="RoomId" required>
-                                <option value="">Select Capacity</option>
-                                @foreach (var room in Model.Rooms)
+                    <div class="mb-3">
+                        <label class="form-label">Package:</label>
+                        <div class="container-booking">
+                            <div class="select-btn" id="packageSelectBtn">
+                                <span class="btn-text">Select Package</span>
+                                <span class="arrow-dwn">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
+                            </div>
+
+                            <ul class="list-items" id="packageList">
+                                @foreach (var package in Model.Packages)
                                 {
-                                    <option value="@room.RoomId">@room.Capacity</option>
+                                    <li class="item">
+                                        <span class="checkbox">
+                                            <i class="fa-solid fa-check check-icon"></i>
+                                        </span>
+                                        <span class="item-text">@package.PackageType</span>
+                                    </li>
                                 }
-                            </select>
-                        </div>   
-                        <div class="mb-3">
-                            <label class="form-label">Package:</label>
-                        </div>
+                            </ul>
 
-                        <div class="mb-3">
-                            <label asp-for="Packages[0]" class="form-label">- Menu: </label>
-                            <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
                         </div>
+                    </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Packages[1]" class="form-label">- Entertainment: </label>
-                            <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Service:</label>
+                        <div class="container-booking">
+                            <div class="select-btn" id="serviceSelectBtn">
+                                <span class="btn-text">Select Service</span>
+                                <span class="arrow-dwn">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
+                            </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Packages[2]" class="form-label">- Decoration: </label>
-                            <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                            <ul class="list-items" id="serviceList">
+                                @foreach (var service in Model.Services)
+                                {
+                                    <li class="item" data-service-id="@service.ServiceId">
+                                        <span class="checkbox">
+                                            <i class="fa-solid fa-check check-icon"></i>
+                                        </span>
+                                        <span class="item-text">@service.ServiceName</span>
+                                    </li>
+                                }
+                            </ul>
+
                         </div>
-                    }
-                    else
-                    {
-                        <div class="mb-3">
-                           <label asp-for="RoomId" class="form-label">Room Capacity:</label>
-                            <select class="form-control" asp-for="RoomId" disabled>
-                              <option value="">Select Capacity</option>
+                    </div>
+
+                    
+
+                     @if (isCustomer && canUpdate)
+                    // {
+                    //     <div class="mb-3">
+                    //         <label asp-for="RoomId" class="form-label">Room Capacity:</label>
+                    //         <select class="form-control" asp-for="RoomId" required>
+                    //             <option value="">Select Capacity</option>
+                    //             @foreach (var room in Model.Rooms)
+                    //             {
+                    //                 <option value="@room.RoomId">@room.Capacity</option>
+                    //             }
+                    //         </select>
+                    //     </div>   
+                    //     <div class="mb-3">
+                    //         <label class="form-label">Package:</label>
+                    //     </div>
+
+                    //     <div class="mb-3">
+                    //         <label asp-for="Packages[0]" class="form-label">- Menu: </label>
+                    //         <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                    //     </div>
+
+                    //     <div class="mb-3">
+                    //         <label asp-for="Packages[1]" class="form-label">- Entertainment: </label>
+                    //         <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                    //     </div>
+
+                    //     <div class="mb-3">
+                    //         <label asp-for="Packages[2]" class="form-label">- Decoration: </label>
+                    //         <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                    //     </div>
+                    // }
+                    // else
+                    // {
+                    //     <div class="mb-3">
+                    //        <label asp-for="RoomId" class="form-label">Room Capacity:</label>
+                    //         <select class="form-control" asp-for="RoomId" disabled>
+                    //           <option value="">Select Capacity</option>
                                        
-                                @foreach (var room in Model.Rooms)
-                                {
-                                    <option value="@room.RoomId">@room.Capacity</option>
-                                }
-                            </select>
-                        </div>   
-                            <div class="mb-3">
-                                <label class="form-label">Package:</label>
-                            </div>
+                    //             @foreach (var room in Model.Rooms)
+                    //             {
+                    //                 <option value="@room.RoomId">@room.Capacity</option>
+                    //             }
+                    //         </select>
+                    //     </div>   
+                    //         <div class="mb-3">
+                    //             <label class="form-label">Package:</label>
+                    //         </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Packages[0]" class="form-label">- Menu: </label>
-                                <select id="serviceId1" disabled name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
-                            </div>
+                    //         <div class="mb-3">
+                    //             <label asp-for="Packages[0]" class="form-label">- Menu: </label>
+                    //             <select id="serviceId1" disabled name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                    //         </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Packages[1]" class="form-label">- Entertainment: </label>
-                                        <select id="serviceId2" disabled name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
-                            </div>
+                    //         <div class="mb-3">
+                    //             <label asp-for="Packages[1]" class="form-label">- Entertainment: </label>
+                    //                     <select id="serviceId2" disabled name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                    //         </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Packages[2]" class="form-label">- Decoration: </label>
-                                <select id="serviceId3" disabled name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
-                            </div> 
-                    }
+                    //         <div class="mb-3">
+                    //             <label asp-for="Packages[2]" class="form-label">- Decoration: </label>
+                    //             <select id="serviceId3" disabled name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })"></select>
+                    //         </div> 
+                    // }
 
                     @if (isCustomer && cannotEditPartyTimeAndServiceAndCapacity)
                     {
@@ -133,5 +185,7 @@
             </div>
         </div>
     </div>
+
+    <script src="~/js/dropdown.js"></script>
 }
 
