@@ -17,6 +17,9 @@ namespace PRN221_BirthdayBookingParty.Pages
         [BindProperty]
         public string RoomStatus { get; set; }
 
+        [BindProperty]
+        public decimal RoomPrice { get; set; }
+
         private IRepositoryBase<Room> _roomRepository;
         public RoomUpdateModel()
         {
@@ -31,6 +34,7 @@ namespace PRN221_BirthdayBookingParty.Pages
                 RoomId = room.RoomId;
                 Capacity = room.Capacity;
                 RoomStatus = room.RoomStatus;
+                RoomPrice = room.RoomPrice;
             }
         }
 
@@ -45,6 +49,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 roomToUpdate.Capacity = Capacity;
                 roomToUpdate.RoomStatus = RoomStatus;
+                roomToUpdate.RoomPrice = RoomPrice;
             };
 
             _roomRepository.Update(roomToUpdate);
