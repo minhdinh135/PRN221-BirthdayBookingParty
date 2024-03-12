@@ -14,6 +14,8 @@ namespace PRN221_BirthdayBookingParty.Pages
         public int Capacity { get; set; }
         public string RoomStatus { get; set; }
 
+        public decimal RoomPrice { get; set; }
+
         private IRepositoryBase<Room> _roomRepository;
         public RoomCreateModel()
         {
@@ -26,6 +28,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 Capacity = Capacity,    
                 RoomStatus = Request.Form["RoomStatus"],
+                RoomPrice = RoomPrice
             };
 
             _roomRepository.Add(room);
