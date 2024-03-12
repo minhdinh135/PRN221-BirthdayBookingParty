@@ -20,7 +20,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         public List<Room> Rooms { get; set; } = new List<Room>();
         public List<Service> Services { get; set; } = new List<Service>();
 
-		public List<Service> SelectedServices { get; set; } = new List<Service>();
+        public List<int> SelectedServiceIds { get; set; }
 
         private BookingRepository bookingRepository;
         private RoomRepository roomRepository;
@@ -71,7 +71,10 @@ namespace PRN221_BirthdayBookingParty.Pages
                 UserId = userId
             };
 
-            foreach (Service service in SelectedServices)
+            bookingRepository.Add(booking);
+
+            List<Service> selectedServices = serviceRepository.GetAll().Where(s => SelectedServiceIds.Contains(s.ServiceId)).ToList();
+            foreach (Service service in selectedServices)
             {
                 BookingService bookingService = new BookingService
                 {
@@ -93,9 +96,6 @@ namespace PRN221_BirthdayBookingParty.Pages
             };
 
             paymentRepository.Add(payment);
-            
-            bookingRepository.Add(booking);
-
             //string bookingString = JsonSerializer.Serialize(booking);
             //HttpContext.Session.SetString("BOOKING", bookingString);
 
