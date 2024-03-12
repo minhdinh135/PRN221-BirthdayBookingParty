@@ -7,17 +7,29 @@ using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [BindProperties]
     public class BookingListModel : PageModel
     {
 		private IRepositoryBase<Booking> _bookingRepository;
+        private IRepositoryBase<Payment> _paymentRepository;
 
+        public IList<Booking> BookingsWithPayments { get; set; }
+        
 		public List<Booking> Bookings { get; set; }
-		public void OnGet()
-		{
+
+        public List<Payment> Payments { get; set; }
+
+        public BookingListModel()
+        {
             _bookingRepository = new BookingRepository();
+            _paymentRepository = new PaymentRepository();
 
+        }
+
+        public void OnGet()
+		{
             var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
-
+            
 			if(isCustomer)
 			{
                 var customerString = HttpContext.Session.GetString("CUSTOMER");
@@ -29,6 +41,8 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 Bookings = _bookingRepository.GetAll();
             }
+           
+            Payments = _paymentRepository.GetAll();
         }
 	}
 }

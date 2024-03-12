@@ -30,6 +30,7 @@
                                 <th>Booking Date</th>
                                 <th>Party Time</th>
                                 <th>Booking Status</th>
+                                <th>Payment Status</th>
                                 <th>Feedback</th>
                                 @if (isCustomer)
                                 {
@@ -49,17 +50,20 @@
                         <tbody>
                             @foreach (var booking in Model.Bookings)
                             {
-                                        <tr>
+                                    var payment = Model.Payments.FirstOrDefault(p => p.BookingId == booking.BookingId);
+                                    <tr>
                                     @if (!isCustomer)
                                     {
                                              <td>@booking.UserId</td>
                                              <td>@booking.RoomId</td>
                                     }                      
                                             <td>@booking.BookingDate</td>
-
+                                            
                                             <td>@booking.PartyDateTime</td>
                                             <td>@booking.BookingStatus</td>
+                                            <td>@payment.PaymentStatus</td>
                                             <td>@booking.Feedback</td>
+
                                     @if (isCustomer)
                                     {
                                                 <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
