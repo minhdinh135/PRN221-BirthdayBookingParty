@@ -102,7 +102,6 @@ namespace PRN221_BirthdayBookingParty.Pages
 
             return RedirectToPage("/BookingList");
         }
-
         private void AddSelectedServices(int[] serviceIds, int bookingId)
         {
             if (serviceIds != null)

@@ -52,30 +52,7 @@
                             }
                         </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Package:</label>
-                        <div class="container-booking">
-                            <div class="select-btn" id="packageSelectBtn">
-                                <span class="btn-text">Select Package</span>
-                                <span class="arrow-dwn">
-                                    <i class="fa-solid fa-chevron-down"></i>
-                                </span>
-                            </div>
-
-                            <ul class="list-items" id="packageList">
-                                @foreach (var package in Model.Packages)
-                                {
-                                    <li class="item">
-                                        <span class="checkbox">
-                                            <i class="fa-solid fa-check check-icon"></i>
-                                        </span>
-                                        <span class="item-text">@package.PackageType</span>
-                                    </li>
-                                }
-                            </ul>
-
-                        </div>
-                    </div>
+                    
 
                     <div class="mb-3">
                         <label class="form-label">Service:</label>
@@ -90,11 +67,11 @@
                             <ul class="list-items" id="serviceList">
                                 @foreach (var service in Model.Services)
                                 {
-                                    <li class="item" data-service-id="@service.ServiceId">
+                                    <li class="item">
                                         <span class="checkbox">
                                             <i class="fa-solid fa-check check-icon"></i>
                                         </span>
-                                        <span class="item-text">@service.ServiceName</span>
+                                        <span class="item-text" value="@service.ServiceId">@service.ServiceName</span>
                                     </li>
                                 }
                             </ul>
