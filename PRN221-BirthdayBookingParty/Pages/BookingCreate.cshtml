@@ -26,31 +26,17 @@
                             }
                         </select>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Package</label>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Packages[0]" class="form-label">Menu</label>
-                        <select id="serviceId1" name="serviceId1" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[0].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Packages[1]" class="form-label">Entertainment</label>
-                        <select id="serviceId2" name="serviceId2" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[1].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Packages[2]" class="form-label">Decoration</label>
-                        <select id="serviceId3" name="serviceId3" asp-items="@Model.Services.Where(s => s.PackageId == Model.Packages[2].PackageId).Select(s => new SelectListItem { Value = s.ServiceId.ToString(), Text = s.ServiceName })">
-                        </select>
-                    </div>
-
-
-                    <button type="submit" class="btn btn-danger">Create</button>
+                        <select asp-for="SelectedServices" asp-items="Model.Services.ConvertAll(a => {
+                    return new SelectListItem()
+                    {
+                        Text = a.ServiceName.ToString(),
+                        Value = a.ServiceId.ToString(),
+                        Selected = false
+                    };
+                })" multiple="multiple" class="listbox"></select>
+                <br>
+                <br>
+                    <button type="submit" class="btn btn-danger">Next</button>
                     <a asp-page="/BookingList" class="btn btn-primary">Cancel</a>
                 </form>
             </div>
