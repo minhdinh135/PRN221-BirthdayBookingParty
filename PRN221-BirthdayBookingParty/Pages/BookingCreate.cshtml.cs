@@ -45,7 +45,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             Services = serviceRepository.GetAll();
             BookingDate = DateTime.Now;
             Status = "Pending";
-            PartyDateTime = DateTime.Now;   
+            PartyDateTime = DateTime.Now;
         }
 
         public IActionResult OnPost()
@@ -54,14 +54,15 @@ namespace PRN221_BirthdayBookingParty.Pages
             var user = JsonSerializer.Deserialize<User>(userString);
             int userId = user.UserId;
 
-            if (!BookingValidation.IsPartyDateTimeValid(PartyDateTime))
+            if (!BookingValidation.IsPartyDateTimeAfterTwoDays(PartyDateTime))
             {
-                ModelState.AddModelError("PartyDateTime", "Party date and time must be at least 2 days later than the current date and time.");
+                ModelState.AddModelError("PartyDateTime", "Party date and time must be at least 2 days from now.");
                 return Page();
             }
-            if (!BookingValidation.IsAfterCurentDateTime(PartyDateTime))
+
+            if (!BookingValidation.IsPartyDateTimeWithinSixMonths(PartyDateTime))
             {
-                ModelState.AddModelError("PartyDateTime", "Party date and time must be after the current date and time.");
+                ModelState.AddModelError("PartyDateTime", "Party date and time must be within 6 months from now.");
                 return Page();
             }
             Booking booking = new Booking
