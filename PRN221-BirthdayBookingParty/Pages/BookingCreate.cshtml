@@ -29,6 +29,9 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                    <label asp-for="SelectedServiceIds" class="form-label">Services</label>
+                    <br>
                     <select asp-for="SelectedServiceIds" asp-items="Model.Services.ConvertAll(a => {
                             return new SelectListItem()
                             {
@@ -38,6 +41,7 @@
                             };
                         })" multiple="multiple" class="listbox">
                     </select>
+                    </div>
                 <br>
                 <br>
                     <button type="submit" class="btn btn-danger">Next</button>

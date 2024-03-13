@@ -61,7 +61,12 @@ namespace PRN221_BirthdayBookingParty.Pages
 			room.RoomStatus = "Active";
 			roomRepository.Update(room);
 
-			bookingRepository.Add(booking);
+            Services = selectedServices;
+            PaymentStatus = "Not yet";
+            TotalPrice = selectedServices.Sum(s => s.Price) + room.RoomPrice;
+            DepositMoney = Decimal.Multiply((decimal)0.2, TotalPrice);
+
+            bookingRepository.Add(booking);
 
 			foreach (Service service in selectedServices)
 			{
