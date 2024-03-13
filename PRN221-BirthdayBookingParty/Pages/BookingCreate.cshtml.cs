@@ -54,12 +54,16 @@ namespace PRN221_BirthdayBookingParty.Pages
             var user = JsonSerializer.Deserialize<User>(userString);
             int userId = user.UserId;
 
-            if (!IsPartyDateTimeValid(PartyDateTime))
+            if (!BookingValidation.IsPartyDateTimeValid(PartyDateTime))
             {
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be at least 2 days later than the current date and time.");
                 return Page();
             }
-
+            if (!BookingValidation.IsAfterCurentDateTime(PartyDateTime))
+            {
+                ModelState.AddModelError("PartyDateTime", "Party date and time must be after the current date and time.");
+                return Page();
+            }
             Booking booking = new Booking
             {
                 BookingDate = DateTime.Now,
@@ -98,10 +102,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             return RedirectToPage("/PaymentManagement");
         }
 
-        private bool IsPartyDateTimeValid(DateTime partyDateTime)
-        {
-            return partyDateTime > DateTime.Now.AddDays(2);
-        }
+
 
     }
     
