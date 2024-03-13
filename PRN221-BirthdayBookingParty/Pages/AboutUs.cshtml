@@ -1,7 +1,10 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.AboutUsModel
 @{
-
+	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+	var isHost = HttpContext.Session.Keys.Contains("HOST");
+	var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
+	var notLogin = !isCustomer && !isHost && !isAdmin;
 	<!-- Start Hero Section -->
 				<div class="hero">
 					<div class="container">
@@ -10,7 +13,20 @@
 								<div class="intro-excerpt">
 									<h1>About Us</h1>
 										<p class="mb-4">We aim to make your child's special day even more special.</p>
-									<p><a asp-page="/Booking" class="btn btn-secondary me-2">Book Now</a>
+									<p>
+										@if(notLogin)
+										{
+											<a asp-page="/Login" class="btn btn-secondary me-2">Book Now</a>
+										}
+										else if(isCustomer)
+										{
+											<a asp-page="/BookingCreate" class="btn btn-secondary me-2">Book Now</a>
+										}
+										else
+										{
+											<a asp-page="/BookingList" class="btn btn-secondary me-2">Booking List</a>
+										}
+						</p>
 								</div>
 							</div>
 							<div class="col-lg-7">

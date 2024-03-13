@@ -16,6 +16,7 @@
                         <label asp-for="PartyDateTime" class="form-label">Party Time</label>
                         <input type="date" asp-for="PartyDateTime" class="form-control" />
                     </div>
+
                     <div class="mb-3">
                         <label asp-for="RoomId" class="form-label">Room Capacity</label>
                         <select class="form-control" asp-for="RoomId" required>
@@ -26,14 +27,16 @@
                             }
                         </select>
                     </div>
-                        <select asp-for="SelectedServiceIds" asp-items="Model.Services.ConvertAll(a => {
-                    return new SelectListItem()
-                    {
-                        Text = a.ServiceName.ToString(),
-                        Value = a.ServiceId.ToString(),
-                        Selected = false
-                    };
-                })" multiple="multiple" class="listbox"></select>
+
+                    <select asp-for="SelectedServiceIds" asp-items="Model.Services.ConvertAll(a => {
+                            return new SelectListItem()
+                            {
+                                Text = a.ServiceName.ToString(),
+                                Value = a.ServiceId.ToString(),
+                                Selected = false
+                            };
+                        })" multiple="multiple" class="listbox">
+                    </select>
                 <br>
                 <br>
                     <button type="submit" class="btn btn-danger">Next</button>
