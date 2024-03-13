@@ -12,7 +12,7 @@ namespace PRN221_BirthdayBookingParty.Pages
     [BindProperties]
     public class BookingCreateModel : PageModel
     {
-        public DateTime BookingDate { get; set; }
+        public DateTime BookingDate { get; set; } = DateTime.Now;
         public DateTime PartyDateTime { get; set; }
         public string Status { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();

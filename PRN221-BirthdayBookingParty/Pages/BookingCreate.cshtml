@@ -15,6 +15,7 @@
                     <div class="mb-3">
                         <label asp-for="PartyDateTime" class="form-label">Party Time</label>
                         <input type="date" asp-for="PartyDateTime" class="form-control" />
+                        <span asp-validation-for="PartyDateTime" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
@@ -28,6 +29,9 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                    <label asp-for="SelectedServiceIds" class="form-label">Services</label>
+                    <br>
                     <select asp-for="SelectedServiceIds" asp-items="Model.Services.ConvertAll(a => {
                             return new SelectListItem()
                             {
@@ -37,6 +41,7 @@
                             };
                         })" multiple="multiple" class="listbox">
                     </select>
+                    </div>
                 <br>
                 <br>
                     <button type="submit" class="btn btn-danger">Next</button>
