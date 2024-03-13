@@ -71,33 +71,29 @@ namespace PRN221_BirthdayBookingParty.Pages
                 UserId = userId
             };
 
-            bookingRepository.Add(booking);
+			string bookingString = JsonSerializer.Serialize(booking);
+			HttpContext.Session.SetString("BOOKING", bookingString);
+
+			//bookingRepository.Add(booking);
 
             List<Service> selectedServices = serviceRepository.GetAll().Where(s => SelectedServiceIds.Contains(s.ServiceId)).ToList();
-            foreach (Service service in selectedServices)
-            {
-                BookingService bookingService = new BookingService
-                {
-                    BookingId = booking.BookingId,
-                    ServiceId = service.ServiceId,
-                };
+			string selectedServicesString = JsonSerializer.Serialize(selectedServices);
+			HttpContext.Session.SetString("SELECTED_SERVICES", selectedServicesString);
 
-                bookingServiceRepository.Add(bookingService);
-            }
+			//foreach (Service service in selectedServices)
+   //         {
+   //             BookingService bookingService = new BookingService
+   //             {
+   //                 BookingId = booking.BookingId,
+   //                 ServiceId = service.ServiceId,
+   //             };
+
+   //             bookingServiceRepository.Add(bookingService);
+   //         }
 
             Room room = roomRepository.GetAll().FirstOrDefault(r => r.RoomId == RoomId);
-            room.RoomStatus = "Active";
-            roomRepository.Update(room);
-
-            Payment payment = new Payment
-            {
-                PaymentStatus = "Not yet",
-                BookingId = booking.BookingId
-            };
-
-            paymentRepository.Add(payment);
-            //string bookingString = JsonSerializer.Serialize(booking);
-            //HttpContext.Session.SetString("BOOKING", bookingString);
+			string roomString = JsonSerializer.Serialize(room);
+			HttpContext.Session.SetString("ROOM", roomString);
 
             return RedirectToPage("/PaymentManagement");
         }
