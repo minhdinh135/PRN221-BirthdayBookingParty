@@ -26,7 +26,6 @@ namespace PRN221_BirthdayBookingParty.Pages
         public List<Service> SelectedServices { get; set; } = new List<Service>();
         public List<int> SelectedServiceIds { get; set; }
 
-
         private PaymentRepository paymentRepository;
         private BookingRepository bookingRepository;
         private RoomRepository roomRepository;
@@ -60,7 +59,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             }
 
             Packages = packageRepository.GetAll();
-            Rooms = roomRepository.GetAll().Where(r => r.RoomStatus == "Inactive").ToList();
+            Rooms = roomRepository.GetAll();
             Services = serviceRepository.GetAll();
 
             if (booking != null)
