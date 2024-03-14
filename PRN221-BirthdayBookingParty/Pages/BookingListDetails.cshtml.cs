@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories;
+using System.Net.NetworkInformation;
 using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
@@ -56,9 +57,8 @@ namespace PRN221_BirthdayBookingParty.Pages
                 PaymentStatus = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == booking.BookingId).PaymentStatus;
             }
 
-            Bookings = bookingRepository.GetAll();
             Packages = packageRepository.GetAll();
-            Rooms = roomRepository.GetAll();
+            Rooms = roomRepository.GetAll().Where(r => r.RoomStatus == "Inactive").ToList();
             Services = serviceRepository.GetAll();
 
             if (booking != null)
@@ -99,7 +99,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             string roomString = JsonSerializer.Serialize(room);
             HttpContext.Session.SetString("ROOM", roomString);
 
-            return RedirectToPage("/PaymentManagement");
+            return RedirectToPage("/PaymentUpdate");
         }
     }
 }

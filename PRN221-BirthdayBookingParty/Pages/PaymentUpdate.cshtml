@@ -1,0 +1,32 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.PaymentUpdateModel
+@{
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Payment</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label asp-for="PaymentStatus" class="form-label">Payment Status:</label>
+                        <input type="text" asp-for="PaymentStatus" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="TotalPrice" class="form-label">Total Price:</label>
+                        <input type="number" asp-for="TotalPrice" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DepositMoney" class="form-label">Deposit Money:</label>
+                        <input type="number" asp-for="DepositMoney" class="form-control" disabled />
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">Update Booking</button>
+                    <a asp-page="/BookingListDetails" class="btn btn-primary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}
