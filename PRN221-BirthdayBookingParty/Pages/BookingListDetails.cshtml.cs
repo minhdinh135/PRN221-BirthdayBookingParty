@@ -11,14 +11,17 @@ namespace PRN221_BirthdayBookingParty.Pages
         public int BookingId { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime PartyDateTime { get; set; }
-        public string Status { get; set; }
+        public string BookingStatus { get; set; }
+        
         public string Feedback { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
         public int RoomId { get; set; }
+        public List<Payment> Payments { get; set; }
         public List<Room> Rooms { get; set; } = new List<Room>();
         public List<Service> Services { get; set; } = new List<Service>();
         public List<Service> SelectedServices { get; set; } = new List<Service>();
 
+        private PaymentRepository paymentRepository;
         private BookingRepository bookingRepository;
         private RoomRepository roomRepository;
         private ServiceRepository serviceRepository;
@@ -27,6 +30,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 
         public BookingListDetailsModel()
         {
+            paymentRepository = new PaymentRepository();
             bookingRepository = new BookingRepository();
             roomRepository = new RoomRepository();
             serviceRepository = new ServiceRepository();
@@ -42,7 +46,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 BookingId = booking.BookingId;
                 PartyDateTime = booking.PartyDateTime;
-                Status = booking.BookingStatus;
+                BookingStatus = booking.BookingStatus;
                 BookingDate = booking.BookingDate;
                 RoomId = booking.RoomId;
                 Feedback = booking.Feedback;

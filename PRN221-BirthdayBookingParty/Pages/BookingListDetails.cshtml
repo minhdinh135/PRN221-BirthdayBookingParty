@@ -3,10 +3,10 @@
 @{
     var isHost = HttpContext.Session.Keys.Contains("HOST");
     var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
-    var canEditFeedback = Model.Status == "Done";
-    var cannotEditPartyTimeAndServiceAndCapacity = Model.Status == "Accept";
-    var cannotEditAnything = Model.Status == "Deny";
-    var canUpdate = Model.Status == "Pending";
+    var canEditFeedback = Model.BookingStatus == "Done";
+    var cannotEditPartyTimeAndServiceAndCapacity = Model.BookingStatus == "Accept";
+    var cannotEditAnything = Model.BookingStatus == "Deny";
+    var canUpdate = Model.BookingStatus == "Pending";
 
         <div class="container mt-4">
             <div class="card">
@@ -23,6 +23,8 @@
                             <input type="date" asp-for="BookingDate" class="form-control" disabled/>
                         </div>
 
+                        
+
                         <div class="mb-3">
                             <label asp-for="PartyDateTime" class="form-label">Party Time:</label>
                         @if (!canUpdate || !isCustomer)
@@ -34,6 +36,13 @@
                                     <input type="date" asp-for="PartyDateTime" class="form-control" />
                         }
                         </div>
+
+                    <div class="mb-3">
+                        <label asp-for="BookingStatus" class="form-label">Booking Status:</label>
+                        <input type="text" asp-for="BookingStatus" class="form-control" disabled />
+                    </div>
+
+
 
                         <div class="mb-3">
                             <label asp-for="RoomId" class="form-label">Room Capacity:</label>
