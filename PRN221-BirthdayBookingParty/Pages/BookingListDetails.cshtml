@@ -8,6 +8,7 @@
     var cannotEditAnything = Model.BookingStatus == "Deny";
     var canUpdate = Model.BookingStatus == "Pending";
 
+
         <div class="container mt-4">
             <div class="card">
                 <div class="card-header">
@@ -42,39 +43,50 @@
                         <input type="text" asp-for="BookingStatus" class="form-control" disabled />
                     </div>
 
+                     <div class="mb-3">
+                        <label asp-for= "PaymentStatus" class="form-label">PaymentStatus:</label>
+                        <input type="text" asp-for="PaymentStatus" class="form-control" disabled />
+                    </div>
 
+                    <div class="mb-3">
+                        <label asp-for="Feedback" class="form-label">Feedback:</label>
+                        <input type="text" asp-for="Feedback" class="form-control" disabled />
+                    </div>
 
-                        <div class="mb-3">
-                            <label asp-for="RoomId" class="form-label">Room Capacity:</label>
-                            <select class="form-control" asp-for="RoomId" required>
-                                <option value="">Select Capacity</option>
-                            @foreach (var room in Model.Rooms)
-                            {
-                                        <option value="@room.RoomId">@room.Capacity - $@room.RoomPrice</option>
-                            }
-                            </select>
-                        </div>
+                                   
+                         
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label">Room Capacity:</label>
+                        <select class="form-control" asp-for="RoomId" required>
+                            <option value="">Select Capacity</option>
+                        @foreach (var room in Model.Rooms)
+                        {
+                                <option value="@room.RoomId">@room.Capacity - $@room.RoomPrice</option>
+                        }
+                        </select>
+                    </div>
 
-                        <div class="mb-3">
-                            <label asp-for="SelectedServices" class="form-label">Services</label>
-                            <br>
-                            <select asp-for="SelectedServices" asp-items="Model.Services.ConvertAll(a => {
-                            return new SelectListItem()
-                            {
-                                Text = a.ServiceName.ToString() + '-' + '$' + a.Price.ToString(),
-                                Value = a.ServiceId.ToString(),
-                                Selected = false
-                            };
-                        })" multiple="multiple" class="listbox">
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label asp-for="SelectedServices" class="form-label">Services:</label>
+                        <br>
+                        @foreach (var service in Model.SelectedServices)
+                        {
+                    <div>
+                        <label>@service.ServiceName - $@service.Price</label>
+                    </div>
+                        }
+                        <select asp-for="SelectedServices"  asp-items="Model.Services.ConvertAll(a => {
+                        return new SelectListItem()
+                        {
+                            Text = a.ServiceName.ToString() + '-' + '$' + a.Price.ToString(),
+                            Value = a.ServiceId.ToString(),
+                            Selected = true
+                        };
+                    })" multiple="multiple" class="listbox">
+                        </select>
+                    </div>
 
-                    @* Commented out sections from BookingCreateModel *@
-                    @* ... (code for Status, Feedback, etc.) ... *@
-
-                    @* Removed code for Packages and other elements from BookingCreateModel *@
-
-                        <button type="submit" class="btn btn-danger">Update</button>
+                        <button type="submit" class="btn btn-danger">Next</button>
                         <a asp-page="/BookingList" class="btn btn-primary">Back</a>
                     </form>
                 </div>

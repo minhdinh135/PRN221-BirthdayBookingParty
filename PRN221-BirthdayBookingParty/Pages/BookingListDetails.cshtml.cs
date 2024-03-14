@@ -2,24 +2,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories;
+using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [BindProperties]
     public class BookingListDetailsModel : PageModel
     {
+        public List<Booking> Bookings { get; set; }
         public int BookingId { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime PartyDateTime { get; set; }
         public string BookingStatus { get; set; }
-        
         public string Feedback { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
         public int RoomId { get; set; }
-        public List<Payment> Payments { get; set; }
+        public string PaymentStatus { get; set; }
         public List<Room> Rooms { get; set; } = new List<Room>();
         public List<Service> Services { get; set; } = new List<Service>();
         public List<Service> SelectedServices { get; set; } = new List<Service>();
+        public List<int> SelectedServiceIds { get; set; }
+
 
         private PaymentRepository paymentRepository;
         private BookingRepository bookingRepository;
@@ -47,28 +50,56 @@ namespace PRN221_BirthdayBookingParty.Pages
                 BookingId = booking.BookingId;
                 PartyDateTime = booking.PartyDateTime;
                 BookingStatus = booking.BookingStatus;
-                BookingDate = booking.BookingDate;
+                BookingDate = DateTime.Now;
                 RoomId = booking.RoomId;
                 Feedback = booking.Feedback;
+                PaymentStatus = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == booking.BookingId).PaymentStatus;
             }
 
+            Bookings = bookingRepository.GetAll();
             Packages = packageRepository.GetAll();
             Rooms = roomRepository.GetAll();
             Services = serviceRepository.GetAll();
 
             if (booking != null)
             {
-                SelectedServices = bookingServiceRepository
+                List<int> SelectedServicesIds = bookingServiceRepository
                     .GetAll()
                     .Where(bs => bs.BookingId == booking.BookingId)
-                    .Select(bs => bs.Service)
+                    .Select(bs => bs.ServiceId)
                     .ToList();
+
+                SelectedServices = serviceRepository.GetAll().Where(s => SelectedServicesIds.Contains(s.ServiceId)).ToList();
             }
+
         }
 
         public IActionResult OnPost()
         {
-            return Page();
+            Booking bookingToUpdate = bookingRepository.GetAll().FirstOrDefault(b => b.BookingId == BookingId);
+            if(bookingToUpdate == null)
+            {
+                return NotFound();
+            }
+            bookingToUpdate.PartyDateTime = PartyDateTime;
+            bookingToUpdate.BookingStatus = "Pending";
+            bookingToUpdate.BookingDate = DateTime.Now;
+            bookingToUpdate.RoomId = RoomId;
+            bookingToUpdate.Feedback = "N/A ";
+            PaymentStatus = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == bookingToUpdate.BookingId).PaymentStatus;
+
+            string bookingString = JsonSerializer.Serialize(bookingToUpdate);
+            HttpContext.Session.SetString("BOOKING", bookingString);
+
+            List<Service> selectedServices = serviceRepository.GetAll().Where(s => SelectedServiceIds.Contains(s.ServiceId)).ToList();
+            string selectedServicesString = JsonSerializer.Serialize(selectedServices);
+            HttpContext.Session.SetString("SELECTED_SERVICES", selectedServicesString);
+
+            Room room = roomRepository.GetAll().FirstOrDefault(r => r.RoomId == RoomId);
+            string roomString = JsonSerializer.Serialize(room);
+            HttpContext.Session.SetString("ROOM", roomString);
+
+            return RedirectToPage("/PaymentManagement");
         }
     }
 }
