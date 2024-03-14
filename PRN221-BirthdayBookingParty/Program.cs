@@ -1,7 +1,11 @@
 using DAOs;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Models;
+using PRN221_BirthdayBookingParty.Authorization;
 using Repositories;
 using Repositories.Interfaces;
 using Services;
@@ -21,11 +25,42 @@ builder.Services.AddDbContext<BookingPartyContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingPartyDB"))
 );
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization(options =>
+    options.AddPolicy("AdminSessionPolicy", policy =>
+        {
+            policy.Requirements.Add(new SessionRequirement("Admin"));
+        }
+    )
+);
+builder.Services.AddAuthorization(options =>
+    options.AddPolicy("HostSessionPolicy", policy =>
+    {
+        policy.Requirements.Add(new SessionRequirement("Host"));
+    }
+    )
+);
+builder.Services.AddAuthorization(options =>
+    options.AddPolicy("CustomerSessionPolicy", policy =>
+    {
+        policy.Requirements.Add(new SessionRequirement("Customer"));
+    }
+    )
+);
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie(options =>
+       {
+           options.LoginPath = "/Login";
+       }
+     );
+builder.Services.AddSingleton<IAuthorizationHandler,SessionRequirementHandler>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
