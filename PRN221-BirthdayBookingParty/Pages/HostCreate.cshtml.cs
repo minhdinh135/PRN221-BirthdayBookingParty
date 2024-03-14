@@ -25,7 +25,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         [BindProperty]
         public string RoleId { get; set; }
         [BindProperty]
-        public DateTime Birthday { get; set; }
+        public DateTime Birthday { get;set; } = DateTime.Now;
 
         private IRepositoryBase<User> _userRepository;
         public HostCreateModel()
