@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -6,6 +7,8 @@ using Repositories.Interfaces;
 
 namespace NguyenHoangLamRazorPages.Pages.CustomerManagement
 {
+    [Authorize(Policy = "AdminSessionPolicy")]
+
     public class CustomerDeleteModel : PageModel
     {
         private IRepositoryBase<User> _userRepository;

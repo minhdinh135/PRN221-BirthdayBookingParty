@@ -1,0 +1,53 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.BookingCreateModel
+@{
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Booking Create</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label asp-for="BookingDate" class="form-label">Booking Date</label>
+                        <input type="date" asp-for="BookingDate" class="form-control" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PartyDateTime" class="form-label">Party Time</label>
+                        <input type="date" asp-for="PartyDateTime" class="form-control" />
+                        <span asp-validation-for="PartyDateTime" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label">Room Capacity</label>
+                        <select class="form-control" asp-for="RoomId" required>
+                            <option value="">Select Capacity</option>
+                            @foreach (var room in Model.Rooms)
+                            {
+                                <option value="@room.RoomId">@room.Capacity - $@room.RoomPrice</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                    <label asp-for="SelectedServiceIds" class="form-label">Services</label>
+                    <br>
+                    <select asp-for="SelectedServiceIds" asp-items="Model.Services.ConvertAll(a => {
+                            return new SelectListItem()
+                            {
+                                Text = a.ServiceName.ToString() + '-' + '$' + a.Price.ToString(),
+                                Value = a.ServiceId.ToString(),
+                                Selected = false
+                            };
+                        })" multiple="multiple" class="listbox">
+                    </select>
+                    </div>
+                <br>
+                <br>
+                    <button type="submit" class="btn btn-danger">Next</button>
+                    <a asp-page="/BookingList" class="btn btn-primary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}

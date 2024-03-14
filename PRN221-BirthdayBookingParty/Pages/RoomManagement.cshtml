@@ -12,9 +12,10 @@
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
-                            <th>RoomID</th>
-                            <th>Capacity</th>
-                            <th>RoomStatus</th>
+                                <th>Room Number</th>
+                                <th>Capacity</th>
+                                <th>RoomStatus</th>
+                                <th>Price</th>
                             @if (isHost)
                             {
                                     <th colspan="2">Action</th>
@@ -28,6 +29,7 @@
                                     <td>@room.RoomId</td>
                                     <td>@room.Capacity</td>
                                     <td>@room.RoomStatus</td>
+                                    <td>@room.RoomPrice</td>
                                 @if (isHost)
                                 {
                                             <td><a class="btn btn-primary" asp-page="/RoomUpdate" asp-route-id="@room.RoomId">Update</a></td>
@@ -37,6 +39,10 @@
                         }
                     </tbody>
                 </table>
+                @if (isHost)
+                {
+                    <a class="btn btn-primary" asp-page="/RoomCreate">Create</a>
+                }
             </div>
         </div>
     </div>

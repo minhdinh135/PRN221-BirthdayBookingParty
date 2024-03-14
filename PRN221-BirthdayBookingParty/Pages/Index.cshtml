@@ -2,9 +2,19 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-
+    var isHost = HttpContext.Session.Keys.Contains("HOST");
+    var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
 }
 
 <div class="text-center">
-    
+    @if (isHost)
+    {
+        <br>
+        <h1>WELCOME BACK HOST!</h1>
+    } 
+    @if (isAdmin)
+    {
+        <br>
+        <h1>WELCOME BACK ADMIN!</h1>
+    }
 </div>

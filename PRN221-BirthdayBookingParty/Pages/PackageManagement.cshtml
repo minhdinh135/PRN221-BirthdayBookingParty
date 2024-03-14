@@ -2,7 +2,8 @@
 @model PRN221_BirthdayBookingParty.Pages.PackageManagementModel
 @{
     var isHost = HttpContext.Session.Keys.Contains("HOST");
-	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+    var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+    var packageIndex = 1;
 
 <div class="container mt-4">
     <h1 class="text-center mb-4">Package List</h1>
@@ -12,9 +13,9 @@
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
-                            <th>PackageID</th>
-                            <th>PackageName</th>
-                            <th>PackageType</th>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>Description</th>
                             @if (isHost)
                             {
                                     <th colspan="2">Action</th>
@@ -25,9 +26,9 @@
                         @foreach (var package in Model.Packages)
                         {
                                 <tr>
-                                    <td>@package.PackageId</td>
-                                    <td>@package.PackageName</td>
+                                    <td>@(packageIndex++)</td>
                                     <td>@package.PackageType</td>
+                                    <td>@package.PackageName</td>
                                 @if (isHost)
                                 {
                                             <td><a class="btn btn-primary" asp-page="/PackageUpdate" asp-route-id="@package.PackageId">Update</a></td>
@@ -37,6 +38,10 @@
                         }
                     </tbody>
                 </table>
+                    @if (isHost)
+                    {
+                        <a class="btn btn-primary" asp-page="/PackageCreate">Create</a>
+                    }
             </div>
         </div>
     </div>

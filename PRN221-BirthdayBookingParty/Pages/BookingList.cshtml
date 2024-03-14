@@ -4,54 +4,96 @@
     var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
     var isHost = HttpContext.Session.Keys.Contains("HOST");
 
-	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+    var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+    var noBookings = Model.Bookings == null || Model.Bookings.Count == 0;
 
-<div class="container mt-4">
-    <h1 class="text-center mb-4">Booking List</h1>
-    <div class="row justify-content-center">
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-bordered table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            @if(!isCustomer){
-                                <th>User ID</th>
-                                <th>Room ID</th>
-                            }                        
-                            <th>Booking Date</th>
-                            <th>Booking Status</th>
-                            <th>Feedback</th>
-                            <th>Package ID</th>
-                                @if (isCustomer)
-                            {
-                                    <th colspan="2">Action</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var booking in Model.Bookings)
-                        {
-                                <tr>
-                                    @if (!isCustomer)
-                                    {
-                                        <td>@booking.UserId</td>
-                                         <td>@booking.RoomId</td>
-                                    }                      
-                                    <td>@booking.BookingDate</td>
-                                    <td>@booking.BookingStatus</td>
-                                    <td>@booking.Feedback</td>
-                                    <td>@booking.PackageId</td>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Booking List</h1>
+        @if (noBookings)
+        {
+                <p class="text-center">You don't have any booking</p>
+                <a class="btn btn-primary" asp-page="/BookingCreate">Create</a>
+        }
+        else
+        {
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                @if (!isCustomer)
+                                {
+                                        <th>User ID</th>
+                                        <th>Room ID</th>
+                                }                        
+                                <th>Booking Date</th>
+                                <th>Party Time</th>
+                                <th>Booking Status</th>
+                                <th>Payment Status</th>
+                                <th>Feedback</th>
                                 @if (isCustomer)
                                 {
-                                            <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
-                                            <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
+                                            <th colspan="2">Action</th>
                                 }
+                                @if (isHost)
+                                {
+                                           <th colspan="2">Action</th>
+                                }
+                                @if(isAdmin)
+                                    {
+                                            <th colspan="1">Action</th>
+
+                                    }
                                 </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var booking in Model.Bookings)
+                            {
+                                    var payment = Model.Payments.FirstOrDefault(p => p.BookingId == booking.BookingId);
+                                    <tr>
+                                    @if (!isCustomer)
+                                    {
+                                             <td>@booking.UserId</td>
+                                             <td>@booking.RoomId</td>
+                                    }                      
+                                            <td>@booking.BookingDate</td>
+                                            
+                                            <td>@booking.PartyDateTime</td>
+                                            <td>@booking.BookingStatus</td>
+                                            <td>@payment.PaymentStatus</td>
+                                            <td>@booking.Feedback</td>
+
+                                    @if (isCustomer)
+                                    {
+                                                <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
+                                                <td><a class="btn btn-primary" asp-page="/BookingListDetails" asp-route-id="@booking.BookingId">View</a></td>
+
+                                    }
+                                    @if (isHost)
+                                    {
+                                                <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
+                                                <td><a class="btn btn-primary" asp-page="/BookingListDetails" asp-route-id="@booking.BookingId">View</a></td>
+
+                                    }
+                                    @if (isAdmin)
+                                    {
+                                                <td><a class="btn btn-primary" asp-page="/BookingListDetails" asp-route-id="@booking.BookingId">View</a></td>
+
+                                    }
+                                    </tr>
+                            }
+
+                            </tbody>
+                    </table>
+                    @if (isCustomer)
+                    {
+                                <a class="btn btn-primary" asp-page="/BookingCreate">Create</a>
+                    }
+                 </div>
             </div>
         </div>
+        }
     </div>
-</div>
+
 }

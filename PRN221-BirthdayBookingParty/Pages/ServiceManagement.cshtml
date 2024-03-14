@@ -1,0 +1,52 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.ServiceListModel
+@{
+	var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+	var isHost = HttpContext.Session.Keys.Contains("HOST");
+	var serviceIndex = 1; 
+<div class="container mt-4">
+	<h1 class="text-center mb-4">Service List</h1>
+	<div class="row justify-content-center">
+		<div class="card">
+			<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead class="table-dark">
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Package Type</th>
+							<th>Price</th>
+							@if (!isCustomer)
+							{
+								<th colspan="2">Action</th>
+							}
+						</tr>
+					</thead>
+					<tbody>
+			@foreach (var service in Model.Services)
+			{
+				<tr>
+					<td>@(serviceIndex++)</td>
+					<td>@service.ServiceName</td>
+					<td>@Model.PackageTypes[service.ServiceId]</td>
+					<td>@service.Price</td>
+					@if (!isCustomer)
+					{
+						<td><a class="btn btn-primary" asp-route-id="@service.ServiceId" asp-page="/ServiceUpdate">Update</a></td>
+						<td><a class="btn btn-danger" asp-route-id="@service.ServiceId" asp-page="/ServiceDelete">Delete</a></td>
+					}
+
+				</tr>
+			}
+		</tbody>
+	</table>
+					@if (isHost)
+					{
+						<a class="btn btn-primary" asp-page="/ServiceCreate">Create</a>
+					}
+					
+			</div>
+		</div>
+	</div>
+</div>
+}

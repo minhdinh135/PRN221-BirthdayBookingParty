@@ -12,6 +12,7 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="~/css/tiny-slider.css" rel="stylesheet">
 		<link href="~/css/style.css" rel="stylesheet">
+		
 </head>
 <body>
     @* <header>
@@ -43,7 +44,7 @@
 
 	}
     <!-- Start Header/Navigation -->
-        <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+        <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" style="margin-bottom: 0px;" arial-label="Furni navigation bar">
 
             <div class="container">
 				<a class="navbar-brand" asp-page="/Index">BirthdayBooking<span></span></a>
@@ -54,57 +55,65 @@
 
                 <div class="collapse navbar-collapse" id="navbarsFurni">
                     <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                        <li class="nav-item active">
-							<a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-							@if(!isAdmin && !isHost){
+						@if (!isAdmin && !isHost && !isCustomer)
+						{
+							<li class="active"><a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/PrivacyPolicy">Privacy Policy</a></li>
-							}
-                        </li>
-						@if (isAdmin){
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/RoomManagement">Room</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package</a></li>
-					}
+						}
+						
+						@if (isAdmin)
+						{
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
+							<li><a class="nav-link text-dark" asp-area=""  asp-page="/BookingList">Booking</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/RoomManagement">Room</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package</a></li>
+						}
 
-						@if (isCustomer){
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/ProfileCustomer">Profile</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package List</a></li>
-					}
+						@if (isCustomer)
+						{
+							var customerName = Context.Session.GetString("CUSTOMER_NAME");
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/ProfileCustomer">@customerName</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">About Us</a></li>
+
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceManagement">Service List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package List</a></li>
+						}
 
 						@if (isHost)
 						{
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
-						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceList">Service List</a></li>
+							<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceManagement">Service List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/PackageManagement">Package List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/RoomManagement">Room List</a></li>
 					}
 
-                    </ul
+                    </ul>
+
                 </div>
+
+			@if (isAdmin || isCustomer || isHost)
+			{
+				<li class="nav-item" style="list-style-type: none">
+					<form id="logoutForm" asp-page="/Logout" method="post">
+						<button type="submit" class="btn btn-primary">Logout</button>
+					</form>
+				</li>
+			}
+			else
+			{
+				<li class="nav-item" style="list-style-type: none">
+					<a class="nav-link text-dark" asp-page="/Login">Login</a>
+				</li>
+			}
             </div>
-		@if (isAdmin || isCustomer || isHost)
-		{
-			<li class="nav-item" style="list-style-type: none">
-			<form id="logoutForm" asp-page="/Logout" method="post">
-				<button type="submit" class="btn btn-primary">Logout</button>
-			</form>
-		</li>
-		}
-		else
-		{
-		<li class="nav-item" style="list-style-type: none"  >
-			<a class="nav-link text-dark" asp-page="/Login">Login</a>
-		</li>
-		}
+		
         </nav>
         <!-- End Header/Navigation -->
 
-    <div class="container">
+    <div class="">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -169,10 +178,43 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+	
+	<script src="~/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/tiny-slider.js"></script>
+	<script src="~/js/custom.js"></script>
 
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<script src="js/tiny-slider.js"></script>
-		<script src="js/custom.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<link href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('.listbox').multiselect({
+				includeSelectAllOption: true
+			});
+		});
+	</script>
+
+	<script>
+		console.log(window.location.pathname);
+		const links = document.querySelectorAll(".custom-navbar li");
+		for(let link of links){
+			link.addEventListener("click", (e) => {
+				link.classList.toggle("active");
+			})
+			//link.classList.toggle("active");
+		}
+	</script>
+	@if (ViewData["Message"] != null)
+	{
+			<script type="text/javascript">
+				window.onload = function () {
+					alert("@ViewData["Message"]");
+				};
+			</script>
+	}
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

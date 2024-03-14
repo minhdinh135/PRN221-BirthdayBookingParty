@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Models;
-using Repositories.Interfaces;
 using Services.Interfaces;
 using System.Text.Json;
 
@@ -23,48 +21,42 @@ namespace NguyenHoangLamRazorPages.Pages
         {
         }
 
-        public void OnPost(string email, string password)
+        public IActionResult OnPost(string email, string password)
         {
 			var user = userService.GetAccount(email, password);
 
-            if (user == null )
+            if (user == null)
             {
-				Response.Redirect("/Index");
-			}
+                ModelState.AddModelError("", "Invalid email or password.");
+                return Page();
+            }
 
-            if(user.RoleId.Equals(1)) {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            if (user.RoleId.Equals(1)) {
 				HttpContext.Session.SetString("ADMIN", JsonSerializer.Serialize(user));
-				Response.Redirect("/Index");
+				HttpContext.Session.SetString("USER_ROLE", "Admin");
+                return RedirectToPage("/Index");
 			}
 
 			if(user.RoleId.Equals(2))
 			{
 				HttpContext.Session.SetString("HOST", JsonSerializer.Serialize(user));
-				Response.Redirect("/Index");
+                HttpContext.Session.SetString("USER_ROLE", "Host");
+                return RedirectToPage("/Index");
 			}
 
 			if (user.RoleId.Equals(3))
 			{
+				HttpContext.Session.SetString("CUSTOMER_NAME", user.FullName);
 				HttpContext.Session.SetString("CUSTOMER", JsonSerializer.Serialize(user));
-				Response.Redirect("/ProfileCustomer");
+                HttpContext.Session.SetString("USER_ROLE", "Customer");
+                return RedirectToPage("/ProfileCustomer");
 			}
-
-			//if (admin != null && string.Equals(admin.email, email, StringComparison.OrdinalIgnoreCase) &&string.Equals(admin.password, password))
-			//{
-			//    HttpContext.Session.SetString("Admin", JsonSerializer.Serialize(admin));
-			//    Response.Redirect("/Index");
-			//}
-			//else if (customer != null)
-			//{
-			//    HttpContext.Session.SetString("Customer", JsonSerializer.Serialize(customer));
-			//    Response.Redirect("/CustomerProfile");
-			//}
-			//else
-			//{
-			//    ModelState.AddModelError(string.Empty, "Invalid email or password.");
-			//}
-
-
+			return Page();
 		}
     }
 }

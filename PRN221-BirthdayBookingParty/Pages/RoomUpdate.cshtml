@@ -1,0 +1,35 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.RoomUpdateModel
+@{
+        <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Room Update</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" asp-for="RoomId" />
+                    <div class="mb-3">
+                        <label for="Capacity" class="form-label">Capacity:</label>
+                        <input type="text" asp-for="Capacity" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="RoomPrice" class="form-label">RoomPrice:</label>
+                        <input type="text" asp-for="RoomPrice" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="RoomStatus" class="form-label">Room Status:</label>
+                        <select class="form-control" asp-for="RoomStatus" required>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-page="./RoomManagement" class="btn btn-secondary">Back to List</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}

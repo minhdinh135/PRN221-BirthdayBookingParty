@@ -1,0 +1,22 @@
+﻿@page "/Packages/Create"
+@model PRN221_BirthdayBookingParty.Pages.PackageCreateModel
+<br>
+<h1>Create New Package</h1>
+<br>
+<form method="post">
+    <div class="form-group">
+        <label for="PackageName">Description:</label>
+        <input type="text" class="form-control" id="PackageName" name="PackageName" required>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="PackageType">Package Type:</label>
+        <input type="text" class="form-control" id="PackageType" name="PackageType" required>
+    </div>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-page="./PackageManagement">Back to List</a>
+    </div>
+    
+</form>

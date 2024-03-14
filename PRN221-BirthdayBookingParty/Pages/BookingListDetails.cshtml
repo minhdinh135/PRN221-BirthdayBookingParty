@@ -1,0 +1,98 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.BookingListDetailsModel
+@{
+    var isHost = HttpContext.Session.Keys.Contains("HOST");
+    var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+    var canEditFeedback = Model.BookingStatus == "Done";
+    var cannotEditPartyTimeAndServiceAndCapacity = Model.BookingStatus == "Accept";
+    var cannotEditAnything = Model.BookingStatus == "Deny";
+    var canUpdate = Model.BookingStatus == "Pending";
+
+
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Booking Details</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <input type="hidden" asp-for="BookingId" class="form-control" />
+                        <input type="hidden" asp-for="RoomId" class="form-control"/>
+
+                        <div class="mb-3">
+                            <label asp-for="BookingDate" class="form-label">Booking Date:</label>
+                            <input type="date" asp-for="BookingDate" class="form-control" disabled/>
+                        </div>
+
+                        
+
+                        <div class="mb-3">
+                            <label asp-for="PartyDateTime" class="form-label">Party Time:</label>
+                        @if (!canUpdate || !isCustomer)
+                        {
+                                    <input type="date" asp-for="PartyDateTime" class="form-control" disabled />
+                        }
+                        else
+                        {
+                                    <input type="date" asp-for="PartyDateTime" class="form-control" />
+                        }
+                        </div>
+
+                    <div class="mb-3">
+                        <label asp-for="BookingStatus" class="form-label">Booking Status:</label>
+                        <input type="text" asp-for="BookingStatus" class="form-control" disabled />
+                    </div>
+
+                     <div class="mb-3">
+                        <label asp-for= "PaymentStatus" class="form-label">PaymentStatus:</label>
+                        <input type="text" asp-for="PaymentStatus" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Feedback" class="form-label">Feedback:</label>
+                        <input type="text" asp-for="Feedback" class="form-control" disabled />
+                    </div>
+
+                                   
+                         
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label">Room Capacity:</label>
+                        <select class="form-control" asp-for="RoomId" required>
+                            <option value="">Select Capacity</option>
+                        @foreach (var room in Model.Rooms)
+                        {
+                                <option value="@room.RoomId">@room.Capacity - $@room.RoomPrice</option>
+                        }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SelectedServices" class="form-label">Services:</label>
+                        <br>
+                        @foreach (var service in Model.SelectedServices)
+                        {
+                    <div>
+                        <label>@service.ServiceName - $@service.Price</label>
+                    </div>
+                        }
+                        <select asp-for="SelectedServiceIds"  asp-items="Model.Services.ConvertAll(a => {
+                        var isServiceSelected = Model.SelectedServices.Select(s => s.ServiceId).Contains(a.ServiceId);
+                        return new SelectListItem()
+                        {
+                            Text = a.ServiceName.ToString() + '-' + '$' + a.Price.ToString(),
+                            Value = a.ServiceId.ToString(),
+                            Selected = isServiceSelected
+                        };
+                    })" multiple="multiple" class="listbox">
+                        </select>
+                    </div>
+
+                        <button type="submit" class="btn btn-danger">Next</button>
+                        <a asp-page="/BookingList" class="btn btn-primary">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="~/js/dropdown.js"></script>
+}
