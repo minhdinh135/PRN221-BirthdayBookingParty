@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -5,6 +6,8 @@ using Repositories;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize(Policy = "HostSessionPolicy")]
+
     [BindProperties]
     public class ServiceCreateModel : PageModel
     {

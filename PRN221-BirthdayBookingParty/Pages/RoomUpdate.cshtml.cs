@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories.Interfaces;
 using Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize(Policy = "HostSessionPolicy")]
+
     public class RoomUpdateModel : PageModel
     {
         [BindProperty]

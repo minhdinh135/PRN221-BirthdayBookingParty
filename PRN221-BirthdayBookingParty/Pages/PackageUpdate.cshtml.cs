@@ -4,9 +4,12 @@ using Models;
 using Repositories.Interfaces;
 using Repositories;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize(Policy = "HostSessionPolicy")]
+
     [BindProperties]
     public class PackageUpdateModel : PageModel
     {

@@ -5,9 +5,12 @@ using Repositories.Interfaces;
 using Repositories;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize(Policy = "HostSessionPolicy")]
+
     [BindProperties]
     public class RoomCreateModel : PageModel
     {
