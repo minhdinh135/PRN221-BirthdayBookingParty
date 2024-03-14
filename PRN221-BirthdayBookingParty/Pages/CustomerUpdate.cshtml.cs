@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -7,6 +8,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NguyenHoangLamRazorPages.Pages
 {
+    [Authorize(Policy = "AdminSessionPolicy")]
+
     public class CustomerUpdateModel : PageModel
     {
         [BindProperty]

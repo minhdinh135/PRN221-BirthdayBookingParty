@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -8,6 +9,8 @@ using System.Text.Json;
 
 namespace DinhTranNhatMinhRazorPages.Pages
 {
+    [Authorize(Policy = "CustomerSessionPolicy")]
+
     public class CustomerProfileEditModel : PageModel
     {
         [BindProperty]

@@ -4,9 +4,11 @@ using Models;
 using Repositories.Interfaces;
 using Repositories;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+
     [BindProperties]
     public class BookingListModel : PageModel
     {
