@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories;
 using Repositories.Interfaces;
-using System.Net.Mail;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {

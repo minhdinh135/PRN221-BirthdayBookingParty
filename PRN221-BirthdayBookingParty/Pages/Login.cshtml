@@ -3,26 +3,35 @@
 @{
     ViewData["Title"] = "Login";
 }
+
 <br>
 <h1 class="text-center mb-4">LOGIN</h1>
+
 
 <form method="POST" class="mx-auto" style="max-width: 400px;">
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" name="email" id="email" class="form-control" required />
-        <div class="invalid-feedback">Please enter a valid email.</div>
     </div>
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input type="password" name="password" id="password" class="form-control" required />
-        <div class="invalid-feedback">Please enter your password.</div>
     </div>
-
+    @if (Model.ModelState.IsValid == false)
+    {
+        <div class="alert alert-danger" role="alert">
+            @foreach (var modelError in Model.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@modelError.ErrorMessage</p>
+            }
+        </div>
+    }
     <button type="submit" class="btn btn-primary btn-block">Login</button>
-
     <div class="text-center mt-3">
         <a href="Register" class="link-primary">Register</a>
     </div>
 </form>
+
+
 
