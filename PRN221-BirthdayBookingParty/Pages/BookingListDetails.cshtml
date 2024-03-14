@@ -44,7 +44,7 @@
                     </div>
 
                      <div class="mb-3">
-                        <label asp-for= "PaymentStatus" class="form-label">PaymentStatus:</label>
+                        <label asp-for= "PaymentStatus" class="form-label">Payment Status:</label>
                         <input type="text" asp-for="PaymentStatus" class="form-control" disabled />
                     </div>
 
@@ -71,7 +71,7 @@
                         @foreach (var service in Model.SelectedServices)
                         {
                     <div>
-                        <label>@service.ServiceName - $@service.Price</label>
+                        <label>- @service.ServiceName - $@service.Price</label>
                     </div>
                         }
                         <select asp-for="SelectedServiceIds"  asp-items="Model.Services.ConvertAll(a => {
