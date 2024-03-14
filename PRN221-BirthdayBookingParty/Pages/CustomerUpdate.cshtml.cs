@@ -47,11 +47,6 @@ namespace NguyenHoangLamRazorPages.Pages
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             User userToUpdate = _userRepository.GetAll().FirstOrDefault(u => u.UserId == UserId);
             if (userToUpdate == null)
             {
