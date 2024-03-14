@@ -82,22 +82,9 @@ namespace PRN221_BirthdayBookingParty.Pages
 			string bookingString = JsonSerializer.Serialize(booking);
 			HttpContext.Session.SetString("BOOKING", bookingString);
 
-			//bookingRepository.Add(booking);
-
             List<Service> selectedServices = serviceRepository.GetAll().Where(s => SelectedServiceIds.Contains(s.ServiceId)).ToList();
 			string selectedServicesString = JsonSerializer.Serialize(selectedServices);
 			HttpContext.Session.SetString("SELECTED_SERVICES", selectedServicesString);
-
-			//foreach (Service service in selectedServices)
-   //         {
-   //             BookingService bookingService = new BookingService
-   //             {
-   //                 BookingId = booking.BookingId,
-   //                 ServiceId = service.ServiceId,
-   //             };
-
-   //             bookingServiceRepository.Add(bookingService);
-   //         }
 
             Room room = roomRepository.GetAll().FirstOrDefault(r => r.RoomId == RoomId);
 			string roomString = JsonSerializer.Serialize(room);

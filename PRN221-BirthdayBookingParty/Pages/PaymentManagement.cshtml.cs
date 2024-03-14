@@ -45,7 +45,6 @@ namespace PRN221_BirthdayBookingParty.Pages
             PaymentStatus = "Not yet";
             TotalPrice = selectedServices.Sum(s => s.Price) + room.RoomPrice;
 			DepositMoney = Decimal.Multiply((decimal)0.2, TotalPrice);
-
 		}
 
         public IActionResult OnPost()

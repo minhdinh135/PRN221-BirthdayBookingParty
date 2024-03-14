@@ -75,12 +75,13 @@
                         <label>@service.ServiceName - $@service.Price</label>
                     </div>
                         }
-                        <select asp-for="SelectedServices"  asp-items="Model.Services.ConvertAll(a => {
+                        <select asp-for="SelectedServiceIds"  asp-items="Model.Services.ConvertAll(a => {
+                        var isServiceSelected = Model.SelectedServices.Select(s => s.ServiceId).Contains(a.ServiceId);
                         return new SelectListItem()
                         {
                             Text = a.ServiceName.ToString() + '-' + '$' + a.Price.ToString(),
                             Value = a.ServiceId.ToString(),
-                            Selected = true
+                            Selected = isServiceSelected
                         };
                     })" multiple="multiple" class="listbox">
                         </select>
