@@ -17,6 +17,8 @@ namespace NguyenHoangLamRazorPages.Pages
         [BindProperty]
         public string FullName { get; set; }
         [BindProperty]
+        public string HomeAddress { get; set; }
+        [BindProperty]
         [Phone]
         public string Telephone { get; set; }
         [BindProperty]
@@ -41,6 +43,7 @@ namespace NguyenHoangLamRazorPages.Pages
             {
                 UserId = user.UserId;
                 FullName = user.FullName;
+                HomeAddress = user.Address;
                 Telephone = user.Phone;
                 EmailAddress = user.Email;
                 Birthday = user.Birthday;
@@ -58,6 +61,7 @@ namespace NguyenHoangLamRazorPages.Pages
 
 			userToUpdate.UserId = UserId;
 			userToUpdate.FullName = FullName;
+            userToUpdate.Address = HomeAddress;
 			userToUpdate.Phone = Telephone;
 			userToUpdate.Email = EmailAddress;
 			userToUpdate.Birthday = Birthday;
