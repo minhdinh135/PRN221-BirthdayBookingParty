@@ -10,6 +10,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 {
 
     [BindProperties]
+    [Authorize(Policy = "LoginSessionPolicy")]
     public class BookingListDetailsModel : PageModel
     {
         public List<Booking> Bookings { get; set; }

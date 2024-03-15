@@ -7,6 +7,7 @@ using Repositories.Interfaces;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize("LoginSessionPolicy")]
     public class BookingUpdateModel : PageModel
     {
         [BindProperty]

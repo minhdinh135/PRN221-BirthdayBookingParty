@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [Authorize(Policy = "HostSessionPolicy")]
-
     public class RoomDeleteModel : PageModel
     {
         private IRepositoryBase<Room> _roomRepository;

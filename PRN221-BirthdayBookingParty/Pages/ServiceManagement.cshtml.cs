@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -6,6 +7,7 @@ using Repositories.Interfaces;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+	[Authorize("LoginSessionPolicy")]
     public class ServiceListModel : PageModel
     {
 		private IRepositoryBase<Service> serviceRepository;
