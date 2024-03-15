@@ -57,7 +57,7 @@
                          
                     <div class="mb-3">
                         <label asp-for="RoomId" class="form-label">Room Capacity:</label>
-                        <select class="form-control" asp-for="RoomId" required>
+                        <select class="form-control" asp-for="RoomId" disabled>
                             @foreach (var room in Model.Rooms)
                             {
                                     <option value="@room.RoomId">@room.Capacity - $@room.RoomPrice</option>
