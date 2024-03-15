@@ -11,7 +11,7 @@ namespace PRN221_BirthdayBookingParty.Pages
     {
         [BindProperty]
         [StringLength(40, MinimumLength = 2, ErrorMessage = "FullName must be between 2 and 40 characters")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "FullName can only contain alphabetic characters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "CustomerFullName can only contain alphabetic characters and spaces")]
         public string FullName { get; set; }
         [BindProperty]
         [RegularExpression(@"^\d{10,11}$", ErrorMessage = "Telephone must be a valid phone number")]
@@ -25,7 +25,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         [BindProperty]
         public byte? Status { get; set; }
         [BindProperty]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid EmailAddress format")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid Email format")]
         public string Email { get; set; }
         [BindProperty]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 50 characters")]
@@ -49,17 +49,21 @@ namespace PRN221_BirthdayBookingParty.Pages
                 return Page();
             }
 
-            DateTime birthday = new DateTime(Birthday.Year);
+            DateTime birthday = new DateTime(Birthday.Year, Birthday.Month, Birthday.Day);
             int age = DateTime.Now.Year - Birthday.Year;
             if (age < 16)
             {
                 ModelState.AddModelError("Birthday", "You must be at least 16 years old.");
                 return Page();
             }
-
-            if (IsDuplicate(Phone, Email))
+			if (age > 99)
+			{
+				ModelState.AddModelError("Birthday", "You must not be over 100 years old.");
+				return Page();
+			}
+			if (IsDuplicate(Phone, Email))
             {
-                ModelState.AddModelError(string.Empty, "Phone or EmailAddress already exists.");
+                ModelState.AddModelError(string.Empty, "Phone or Email already exists.");
                 return Page();
             }
 

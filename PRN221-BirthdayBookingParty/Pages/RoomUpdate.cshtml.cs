@@ -4,6 +4,7 @@ using Models;
 using Repositories.Interfaces;
 using Repositories;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
@@ -15,12 +16,14 @@ namespace PRN221_BirthdayBookingParty.Pages
         public int RoomId { get; set; }
 
         [BindProperty]
+        [Range(10, 100, ErrorMessage = "Capacity must be between 10 and 100.")]
         public int Capacity { get; set; }
 
         [BindProperty]
         public string RoomStatus { get; set; }
 
         [BindProperty]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Room price must be greater than 0.")]
         public decimal RoomPrice { get; set; }
 
         private IRepositoryBase<Room> _roomRepository;

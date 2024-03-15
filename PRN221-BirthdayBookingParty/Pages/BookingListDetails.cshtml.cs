@@ -21,7 +21,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         public List<Package> Packages { get; set; } = new List<Package>();
         public int RoomId { get; set; }
         public string PaymentStatus { get; set; }
-        public List<Room> Rooms { get; set; } = new List<Room>();
+        public List<Room> Rooms { get; set; }
         public List<Service> Services { get; set; } = new List<Service>();
         public List<Service> SelectedServices { get; set; } = new List<Service>();
         public List<int> SelectedServiceIds { get; set; }
@@ -52,7 +52,7 @@ namespace PRN221_BirthdayBookingParty.Pages
                 BookingId = booking.BookingId;
                 PartyDateTime = booking.PartyDateTime;
                 BookingStatus = booking.BookingStatus;
-                BookingDate = DateTime.Now;
+                BookingDate = booking.BookingDate;
                 RoomId = booking.RoomId;
                 Feedback = booking.Feedback;
                 PaymentStatus = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == booking.BookingId).PaymentStatus;
@@ -84,7 +84,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             }
             bookingToUpdate.PartyDateTime = PartyDateTime;
             bookingToUpdate.BookingStatus = "Pending";
-            bookingToUpdate.BookingDate = DateTime.Now;
+            bookingToUpdate.BookingDate = BookingDate;
             bookingToUpdate.RoomId = RoomId;
             bookingToUpdate.Feedback = "N/A ";
             PaymentStatus = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == bookingToUpdate.BookingId).PaymentStatus;
