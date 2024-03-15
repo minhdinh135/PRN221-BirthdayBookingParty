@@ -12,11 +12,13 @@
                     <div class="mb-3">
                         <label for="Capacity" class="form-label">Capacity:</label>
                         <input type="text" asp-for="Capacity" class="form-control" required />
+                        <span asp-validation-for="Capacity" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label for="RoomPrice" class="form-label">RoomPrice:</label>
                         <input type="text" asp-for="RoomPrice" class="form-control" required />
+                        <span asp-validation-for="RoomPrice" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">

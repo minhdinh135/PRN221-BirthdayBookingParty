@@ -68,6 +68,12 @@ namespace PRN221_BirthdayBookingParty.Pages
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be within 6 months from now.");
                 return Page();
             }
+
+            if (bookingRepository.GetAll().Any(b => b.PartyDateTime.Date == PartyDateTime.Date))
+            {
+                ModelState.AddModelError("PartyDateTime", "Party date and time is already booked.");
+                return Page();
+            }
             Booking booking = new Booking
             {
                 BookingDate = DateTime.Now,

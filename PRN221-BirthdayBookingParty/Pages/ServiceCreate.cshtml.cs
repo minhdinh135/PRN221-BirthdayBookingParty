@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
@@ -11,10 +12,12 @@ namespace PRN221_BirthdayBookingParty.Pages
     [BindProperties]
     public class ServiceCreateModel : PageModel
     {
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Service name must be between 3 and 50 characters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Service name can only contain alphabetic characters and spaces")]
         public string ServiceName { get; set; }
 
         public int PackageId { get; set; }
-
+        [Range(0.01, double.MaxValue, ErrorMessage = "Service price must be greater than 0.")]
         public decimal Price { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
 
@@ -34,9 +37,14 @@ namespace PRN221_BirthdayBookingParty.Pages
 
         public IActionResult OnPost()
         {
-            if (string.IsNullOrEmpty(ServiceName) || PackageId == 0)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Service name and package must be provided.");
+                return Page();
+            }
+
+            if (IsDuplicate(ServiceName))
+            {
+                ModelState.AddModelError(string.Empty, "Service name already exists.");
                 return Page();
             }
 
@@ -57,6 +65,11 @@ namespace PRN221_BirthdayBookingParty.Pages
                 ModelState.AddModelError("", $"An error occurred while adding the service: {ex.Message}");
                 return Page();
             }
+        }
+        public bool IsDuplicate(string serviceName)
+        {
+            var existingCustomer = serviceRepository.GetAll().FirstOrDefault(c => c.ServiceName == serviceName);
+            return existingCustomer != null;
         }
     }
 }

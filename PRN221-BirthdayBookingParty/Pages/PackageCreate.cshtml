@@ -7,11 +7,13 @@
     <div class="form-group">
         <label for="PackageName">Description:</label>
         <input type="text" class="form-control" id="PackageName" name="PackageName" required>
+        <span asp-validation-for="PackageName" class="text-danger"></span>
     </div>
     <br>
     <div class="form-group">
         <label for="PackageType">Package Type:</label>
         <input type="text" class="form-control" id="PackageType" name="PackageType" required>
+        <span asp-validation-for="PackageType" class="text-danger"></span>
     </div>
     <br>
     <div>
