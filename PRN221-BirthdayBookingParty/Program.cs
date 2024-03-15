@@ -53,6 +53,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
            options.LoginPath = "/Login";
        }
      );
+builder.Services.AddTransient<IEmailService, SmtpEmailService>();
 builder.Services.AddSingleton<IAuthorizationHandler,SessionRequirementHandler>();
 
 builder.Services.AddScoped<IUserService, UserService>();
