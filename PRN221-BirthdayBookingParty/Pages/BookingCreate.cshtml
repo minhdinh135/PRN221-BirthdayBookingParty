@@ -13,9 +13,15 @@
                         <input type="date" asp-for="BookingDate" class="form-control" disabled />
                     </div>
                     <div class="mb-3">
-                        <label asp-for="PartyDateTime" class="form-label">Party Time</label>
-                        <input type="date" asp-for="PartyDateTime" class="form-control" />
-                        <span asp-validation-for="PartyDateTime" class="text-danger"></span>
+                            <label asp-for="PartyStartTime" class="form-label">Party Start Time</label>
+                                <input type="datetime-local" asp-for="PartyStartTime" class="form-control" />
+                            <span asp-validation-for="PartyStartTime" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                            <label asp-for="PartyEndTime" class="form-label">Party End Time</label>
+                                    <input type="datetime-local" asp-for="PartyEndTime" class="form-control" />
+                                <span asp-validation-for="PartyEndTime" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
