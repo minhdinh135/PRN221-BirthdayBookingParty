@@ -12,11 +12,13 @@
                             <input type="hidden" asp-for="PackageId" class="form-control" />
                             <label for="PackageName" class="form-label">Description</label>
                             <input type="text" asp-for="PackageName" class="form-control" required />
+                            <span asp-validation-for="PackageName" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="PackageType" class="form-label">Package Type</label>
                             <input type="text" asp-for="PackageType" class="form-control" required />
+                            <span asp-validation-for="PackageType" class="text-danger"></span>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update</button>

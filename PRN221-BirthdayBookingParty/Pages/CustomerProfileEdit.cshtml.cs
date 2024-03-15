@@ -5,6 +5,7 @@ using Models;
 using Repositories;
 using Repositories.Impl;
 using Repositories.Interfaces;
+using System.Numerics;
 using System.Text.Json;
 
 namespace DinhTranNhatMinhRazorPages.Pages
@@ -26,7 +27,30 @@ namespace DinhTranNhatMinhRazorPages.Pages
 
         public IActionResult OnPost()
         {
-            userRepository = new UserRepository();
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
+
+			DateTime birthday = new DateTime(User.Birthday.Year, User.Birthday.Month, User.Birthday.Day);
+			int age = DateTime.Now.Year - User.Birthday.Year;
+			if (age < 16)
+			{
+				ModelState.AddModelError("Birthday", "You must be at least 16 years old.");
+				return Page();
+			}
+			if (age > 99)
+			{
+				ModelState.AddModelError("Birthday", "You must not be over 100 years old.");
+				return Page();
+			}
+			if (IsDuplicate(User.Phone, User.Email))
+			{
+				ModelState.AddModelError(string.Empty, "Phone or Email already exists.");
+				return Page();
+			}
+
+			userRepository = new UserRepository();
 
             var existingCustomer = userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(User.Email));
 
@@ -48,6 +72,12 @@ namespace DinhTranNhatMinhRazorPages.Pages
             HttpContext.Session.SetString("CUSTOMER", existingCustomerJsonString);
 
 			return RedirectToPage("/ProfileCustomer");
+		}
+
+		public bool IsDuplicate(string phone, string emailAddress)
+		{
+			var existingCustomer = userRepository.GetAll().FirstOrDefault(c => c.Phone == phone || c.Email == emailAddress);
+			return existingCustomer != null;
 		}
 	}
 }
