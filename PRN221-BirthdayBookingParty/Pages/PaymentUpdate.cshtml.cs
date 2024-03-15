@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -6,6 +7,7 @@ using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize(Policy = "CustomerSessionPolicy")]
     public class PaymentUpdateModel : PageModel
     {
         public decimal DepositMoney { get; set; }
@@ -57,6 +59,9 @@ namespace PRN221_BirthdayBookingParty.Pages
             Room room = JsonSerializer.Deserialize<Room>(roomString);
             room.RoomStatus = "Active";
             roomRepository.Update(room);
+            Room originalRoom = roomRepository.GetAll().FirstOrDefault(r => r.RoomId == booking.RoomId);
+            originalRoom.RoomStatus = "Inactive";
+            roomRepository.Update(originalRoom);
 
             Services = selectedServices;
             PaymentStatus = "Not yet";

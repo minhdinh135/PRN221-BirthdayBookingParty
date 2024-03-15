@@ -2,6 +2,8 @@
 @model PRN221_BirthdayBookingParty.Pages.Shared.CustomerManagementModel
 @{
     var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
+    var isHost = HttpContext.Session.Keys.Contains("HOST");
+
 }
 
 <div class="container mt-4">
@@ -12,8 +14,10 @@
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr>
+                            <th>UserID</th>
                             <th>Full Name</th>
                             <th>Telephone</th>
+                            <th>Home Address</th>
                             <th>Email Address</th>
                             <th>Birthday</th>
                             <th>Status</th>
@@ -27,8 +31,10 @@
                         @foreach (var user in Model.Users)
                         {
                                 <tr>
+                                    <td>@user.UserId</td>
                                     <td>@user.FullName</td>
                                     <td>@user.Phone</td>
+                                    <td>@user.Address</td>
                                     <td>@user.Email</td>
                                     <td>@user.Birthday</td>
                                     <td>@user.Status</td>

@@ -15,28 +15,126 @@
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" asp-for="BookingId" class="form-control" />
-                    @if (isHost) {
                             <div>
                                 <label for="BookingId"></label>
                                 <input type="hidden" asp-for="BookingId" id="BookingId" class="form-control" disabled/>
                             </div>
+                            <div>
+                                <label for="PaymentId"></label>
+                                <input type="hidden" asp-for="PaymentId" id="PaymentId" class="form-control" disabled/>
+                            </div>
+                    @if (isHost)
+                    {
+                                <div>
+                                    <label for="Feedback"></label>
+                                    <input type="hidden" asp-for="Feedback" id="Feedback" class="form-control"/>
+                                </div>
+
+                      <div class="form-group">
+                                 <label for="BookingId">Booking Status:</label>
+                                <input type="hidden" asp-for="BookingId" class="form-control" />
+                                    <select class="form-control" asp-for="BookingStatus" name="BookingStatus" required>
+                                        <option value="Deny">Deny</option>
+                                        <option value="Accept">Accept</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Done">Done</option>
+                                    </select>
+                            </div>
+
                             <div class="form-group">
-                             <label for="BookingId">Status:</label>
-                            <input type="hidden" asp-for="BookingId" class="form-control" />
-                        <select class="form-control" asp-for="BookingStatus" name="BookingStatus" required>
-                            <option value="Deny">Deny</option>
-                            <option value="Accept">Accept</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Done">Done</option>
-                        </select>
+                                 <label for="PaymentId">Payment Status:</label>
+                                <input type="hidden" asp-for="PaymentId" class="form-control" />
+                                    <select class="form-control" asp-for="PaymentStatus" name="PaymentStatus" required>
+                                        <option value="Deny">Deny</option>
+                                        <option value="Not yet">Not yet</option>
+                                        <option value="DepositMoneyDone">DepositMoneyDone</option>
+                                        <option value="Done">Done</option>
+                                    </select>
+                             </div>  
+                    }
+                    @if (isCustomer && !canEditFeedback)
+                    {
+                        <div class="form-group">
+                            <label for="Feedback"> Feedback</label>
+                            <input type="text" asp-for="Feedback" id="Feedback" class="form-control" disabled/>
+                        </div>  
+                    }
+
+                    @if (isCustomer && canEditFeedback)
+                    {
+                <div class="form-group">
+                            <label for="BookingId">Booking Status:</label>
+                        <input type="hidden" asp-for="BookingStatus" class="form-control" />
+                                    <select class="form-control" asp-for="BookingStatus" name="BookingStatus" disabled>
+                                <option value="Deny">Deny</option>
+                                <option value="Accept">Accept</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Done">Done</option>
+                            </select>
                     </div>
+
+                    <div class="form-group">
+                            <label for="PaymentId">Payment Status:</label>
+                        <input type="hidden" asp-for="PaymentStatus" class="form-control" />
+                            <select class="form-control" asp-for="PaymentStatus" name="PaymentStatus" disabled>
+                                <option value="Deny">Deny</option>
+                                <option value="Not yet">Not yet</option>
+                                <option value="DepositMoneyDone">DepositMoneyDone</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>  
+
+                        <div class="form-group">
+                            <label for="Feedback"> Feedback</label>
+                            <input type="text" asp-for="Feedback" id="Feedback" class="form-control"/>
+                        </div> 
+                        <br>
+                        <br>
+                    }
+                    
                     <br>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                        }
+                    @if(isHost || (isCustomer && canEditFeedback)){
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    }
 
                     <a asp-page="/BookingList" class="btn btn-secondary">Back to List</a>
                 </form>
             </div>
         </div>
     </div>
+
+            <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var bookingStatusDropdown = document.getElementById('BookingStatus');
+            var paymentStatusDropdown = document.getElementById('PaymentStatus');
+
+            bookingStatusDropdown.addEventListener('change', function () {
+                var selectedBookingStatus = bookingStatusDropdown.value;
+                // Clear existing options
+                paymentStatusDropdown.innerHTML = '';
+
+                // Add new options based on selected booking status
+                switch (selectedBookingStatus) {
+                    case 'Pending':
+                        paymentStatusDropdown.innerHTML = '<option value="Not yet">Not yet</option>';
+                        break;
+                    case 'Accept':
+                        paymentStatusDropdown.innerHTML = '<option value="DepositMoneyDone">DepositMoneyDone</option>';
+                        break;
+                    case 'Done':
+                        paymentStatusDropdown.innerHTML = '<option value="Done">Done</option>';
+                        break;
+                    case 'Deny':
+                        paymentStatusDropdown.innerHTML = '<option value="Deny">Deny</option>';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
+    </script>
+
+
 }
+
+

@@ -7,7 +7,6 @@ using Services.Interfaces;
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [Authorize(Policy = "HostSessionPolicy")]
-
     public class ServiceDeleteModel : PageModel
     {
         private readonly IServiceService _serviceService;

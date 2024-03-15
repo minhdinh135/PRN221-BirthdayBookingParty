@@ -47,13 +47,22 @@ builder.Services.AddAuthorization(options =>
     }
     )
 );
+builder.Services.AddAuthorization(options =>
+    options.AddPolicy("LoginSessionPolicy", policy =>
+    {
+        policy.Requirements.Add(new LoginSessionRequirement(true));
+    }
+    )
+);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
        .AddCookie(options =>
        {
            options.LoginPath = "/Login";
        }
      );
+builder.Services.AddTransient<IEmailService, SmtpEmailService>();
 builder.Services.AddSingleton<IAuthorizationHandler,SessionRequirementHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, LoginSessionRequirementHandler>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 

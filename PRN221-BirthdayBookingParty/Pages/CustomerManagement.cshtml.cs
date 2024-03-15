@@ -7,7 +7,7 @@ using Repositories.Interfaces;
 
 namespace PRN221_BirthdayBookingParty.Pages.Shared
 {
-	[Authorize(Policy = "AdminSessionPolicy")]
+	[Authorize("LoginSessionPolicy")]
 	public class CustomerManagementModel : PageModel
     {
 		private IRepositoryBase<User> _userRepository;

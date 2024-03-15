@@ -16,7 +16,8 @@ namespace PRN221_BirthdayBookingParty.Pages
     public class BookingCreateModel : PageModel
     {
         public DateTime BookingDate { get; set; } = DateTime.Now;
-        public DateTime PartyDateTime { get; set; }
+        public DateTime PartyStartTime { get; set; }
+        public DateTime PartyEndTime { get; set; }
         public string Status { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
         public int RoomId { get; set; }
@@ -48,7 +49,8 @@ namespace PRN221_BirthdayBookingParty.Pages
             Services = serviceRepository.GetAll();
             BookingDate = DateTime.Now;
             Status = "Pending";
-            PartyDateTime = DateTime.Now;
+            PartyStartTime = DateTime.Now;
+            PartyEndTime = DateTime.Now;
         }
 
         public IActionResult OnPost()
@@ -57,21 +59,28 @@ namespace PRN221_BirthdayBookingParty.Pages
             var user = JsonSerializer.Deserialize<User>(userString);
             int userId = user.UserId;
 
-            if (!BookingValidation.IsPartyDateTimeAfterTwoDays(PartyDateTime))
+            if (!BookingValidation.IsPartyDateTimeAfterTwoDays(PartyStartTime))
             {
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be at least 2 days from now.");
                 return Page();
             }
 
-            if (!BookingValidation.IsPartyDateTimeWithinSixMonths(PartyDateTime))
+            if (!BookingValidation.IsPartyDateTimeWithinSixMonths(PartyStartTime))
             {
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be within 6 months from now.");
+                return Page();
+            }
+
+            if (bookingRepository.GetAll().Any(b => b.PartyDateTime.Date == PartyStartTime.Date))
+            {
+                ModelState.AddModelError("PartyDateTime", "Party date and time is already booked.");
                 return Page();
             }
             Booking booking = new Booking
             {
                 BookingDate = DateTime.Now,
-                PartyDateTime = PartyDateTime,
+                PartyDateTime = PartyStartTime,
+                PartyEndTime = PartyEndTime,
                 BookingStatus = "Pending",
                 Feedback = "N/A",
                 RoomId = RoomId,
