@@ -35,7 +35,6 @@ namespace DinhTranNhatMinhRazorPages.Pages
                 return Page();
             }
 
-            existingCustomer.Email = User.Email;
             existingCustomer.FullName = User.FullName;
             existingCustomer.Phone = User.Phone;
             existingCustomer.Address = User.Address;
