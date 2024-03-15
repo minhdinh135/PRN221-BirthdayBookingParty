@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -6,6 +7,7 @@ using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
+    [Authorize(Policy = "CustomerSessionPolicy")]
     public class PaymentUpdateModel : PageModel
     {
         public decimal DepositMoney { get; set; }

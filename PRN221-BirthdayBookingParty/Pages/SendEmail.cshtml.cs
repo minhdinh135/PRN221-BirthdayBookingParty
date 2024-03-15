@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using System.Text.Json.Serialization;
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [BindProperties]
+    [Authorize("HostSessionPolicy")]
     public class SendEmailModel : PageModel
     {
         private readonly ILogger<SendEmailModel> _logger;

@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [Authorize(Policy = "HostSessionPolicy")]
-
     public class RoomUpdateModel : PageModel
     {
         [BindProperty]

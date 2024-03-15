@@ -10,7 +10,6 @@ using System.Numerics;
 namespace NguyenHoangLamRazorPages.Pages
 {
     [Authorize(Policy = "AdminSessionPolicy")]
-
     public class CustomerUpdateModel : PageModel
     {
         [BindProperty]
