@@ -10,6 +10,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 {
 
     [BindProperties]
+    [Authorize(Policy = "LoginSessionPolicy")]
     public class BookingListModel : PageModel
     {
 		private IRepositoryBase<Booking> _bookingRepository;
