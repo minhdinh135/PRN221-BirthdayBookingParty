@@ -16,7 +16,8 @@ namespace PRN221_BirthdayBookingParty.Pages
         public List<Booking> Bookings { get; set; }
         public int BookingId { get; set; }
         public DateTime BookingDate { get; set; }
-        public DateTime PartyDateTime { get; set; }
+        public DateTime PartyStartTime { get; set; }
+        public DateTime PartyEndTime { get; set; }
         public string BookingStatus { get; set; }
         public string Feedback { get; set; }
         public List<Package> Packages { get; set; } = new List<Package>();
@@ -51,7 +52,8 @@ namespace PRN221_BirthdayBookingParty.Pages
             if (booking != null)
             {
                 BookingId = booking.BookingId;
-                PartyDateTime = booking.PartyDateTime;
+                PartyStartTime = booking.PartyDateTime;
+                PartyEndTime = booking.PartyDateTime;
                 BookingStatus = booking.BookingStatus;
                 BookingDate = booking.BookingDate;
                 RoomId = booking.RoomId;
@@ -83,7 +85,8 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 return NotFound();
             }
-            bookingToUpdate.PartyDateTime = PartyDateTime;
+            bookingToUpdate.PartyDateTime = PartyStartTime;
+            bookingToUpdate.PartyEndTime = PartyEndTime;
             bookingToUpdate.BookingStatus = "Pending";
             bookingToUpdate.BookingDate = BookingDate;
             bookingToUpdate.RoomId = RoomId;

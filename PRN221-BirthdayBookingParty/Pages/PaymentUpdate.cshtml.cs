@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace PRN221_BirthdayBookingParty.Pages
 {
-    [Authorize(Policy = "CustomerSessionPolicy")]
+    [Authorize(Policy = "LoginSessionPolicy")]
     public class PaymentUpdateModel : PageModel
     {
         public decimal DepositMoney { get; set; }
