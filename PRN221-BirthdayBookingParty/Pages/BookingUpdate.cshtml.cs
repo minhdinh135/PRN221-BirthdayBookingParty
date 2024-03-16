@@ -24,6 +24,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 
         public IRepositoryBase<Booking> _bookingRepository;
         private IRepositoryBase<Payment> _paymentRepository;
+        private IRepositoryBase<Room> _roomRepository;
 
         public List<Booking> Bookings { get; set; } = new List<Booking>();
 
@@ -31,6 +32,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         {
             _bookingRepository = new BookingRepository();
             _paymentRepository = new PaymentRepository();
+            _roomRepository = new RoomRepository();
         }
 
         public void OnGet(int id)
@@ -51,8 +53,9 @@ namespace PRN221_BirthdayBookingParty.Pages
         {
             Booking bookingToUpdate = _bookingRepository.GetAll().FirstOrDefault(b => b.BookingId == BookingId);
             Payment paymentToUpdate = _paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == BookingId);
+			Room roomToUpdate = _roomRepository.GetAll().FirstOrDefault(r => r.RoomId == bookingToUpdate.RoomId);
 
-            if (bookingToUpdate == null)
+			if (bookingToUpdate == null)
             {
                 return NotFound();
             }
@@ -62,7 +65,13 @@ namespace PRN221_BirthdayBookingParty.Pages
             bookingToUpdate.BookingStatus = BookingStatus;
             paymentToUpdate.PaymentStatus = PaymentStatus;
 
-            _bookingRepository.Update(bookingToUpdate);
+			if (bookingToUpdate.BookingStatus == "Deny" || bookingToUpdate.BookingStatus == "Done")
+			{
+				roomToUpdate.RoomStatus = "Inactive";
+				_roomRepository.Update(roomToUpdate);
+			}
+
+			_bookingRepository.Update(bookingToUpdate);
             _paymentRepository.Update(paymentToUpdate);
 
             return RedirectToPage("/BookingList");

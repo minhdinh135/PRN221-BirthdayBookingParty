@@ -21,7 +21,7 @@ namespace PRN221_BirthdayBookingParty.Pages
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Package type can only contain alphabetic characters and spaces")]
         public string PackageType { get; set; }
 
-        private IRepositoryBase<Package> _packageRepository;
+        private readonly IRepositoryBase<Package> _packageRepository;
         public PackageUpdateModel()
         {
             _packageRepository = new PackageRepository();
