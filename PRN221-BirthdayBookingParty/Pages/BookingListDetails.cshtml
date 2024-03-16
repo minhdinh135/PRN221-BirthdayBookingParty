@@ -3,6 +3,7 @@
 @{
     var isHost = HttpContext.Session.Keys.Contains("HOST");
     var isCustomer = HttpContext.Session.Keys.Contains("CUSTOMER");
+    var isAdmin = HttpContext.Session.Keys.Contains("ADMIN");
     var canEditFeedback = Model.BookingStatus == "Done";
     var cannotEditPartyTimeAndServiceAndCapacity = Model.BookingStatus == "Accept";
     var cannotEditAnything = Model.BookingStatus == "Deny";
@@ -27,15 +28,27 @@
                         
 
                         <div class="mb-3">
-                            <label asp-for="PartyDateTime" class="form-label">Party Time:</label>
+                            <label asp-for="PartyStartTime" class="form-label">Party Start Time:</label>
                         @if (!canUpdate || !isCustomer)
                         {
-                                    <input type="date" asp-for="PartyDateTime" class="form-control" disabled />
+                                    <input type="date" asp-for="PartyStartTime" class="form-control" disabled />
                         }
                         else
                         {
-                                    <input type="date" asp-for="PartyDateTime" class="form-control" />
+                                    <input type="date" asp-for="PartyStartTime" class="form-control" />
                         }
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PartyEndTime" class="form-label">Party End Time:</label>
+                    @if (!canUpdate || !isCustomer)
+                    {
+                                        <input type="date" asp-for="PartyEndTime" class="form-control" disabled />
+                    }
+                    else
+                    {
+                                        <input type="date" asp-for="PartyEndTime" class="form-control" />
+                    }
                         </div>
 
                     <div class="mb-3">
@@ -65,16 +78,18 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="SelectedServices" class="form-label">Services:</label>
-                        <br>
-                        @foreach (var service in Model.SelectedServices)
-                        {
-                    <div>
-                        <label>- @service.ServiceName - $@service.Price</label>
-                    </div>
-                        }
-                        <select asp-for="SelectedServiceIds"  asp-items="Model.Services.ConvertAll(a => {
+                    @if(isCustomer && canUpdate)
+                    {
+                            <div class="mb-3">
+                                <label asp-for="SelectedServices" class="form-label">Services:</label>
+                                <br>
+                            @foreach (var service in Model.SelectedServices)
+                            {
+                                <div>
+                                    <label>- @service.ServiceName - $@service.Price</label>
+                                </div>
+                            }
+                                <select asp-for="SelectedServiceIds"  asp-items="Model.Services.ConvertAll(a => {
                         var isServiceSelected = Model.SelectedServices.Select(s => s.ServiceId).Contains(a.ServiceId);
                         return new SelectListItem()
                         {
@@ -83,8 +98,34 @@
                             Selected = isServiceSelected
                         };
                     })" multiple="multiple" class="listbox">
-                        </select>
-                    </div>
+                                </select>
+                            </div>    
+                    }
+
+                    @if((isCustomer && !canUpdate) || isHost || isAdmin)
+                    {
+                           <div class="mb-3">
+                                <label asp-for="SelectedServices" class="form-label">Services:</label>
+                                <br>
+                            @foreach (var service in Model.SelectedServices)
+                            {
+                                <div>
+                                    <label>- @service.ServiceName - $@service.Price</label>
+                                </div>
+                            }
+                                <select asp-for="SelectedServiceIds"  asp-items="Model.Services.ConvertAll(a => {
+                        var isServiceSelected = Model.SelectedServices.Select(s => s.ServiceId).Contains(a.ServiceId);
+                        return new SelectListItem()
+                        {
+                            Text = a.ServiceName.ToString() + '-' + '$' + a.Price.ToString(),
+                            Value = a.ServiceId.ToString(),
+                            Selected = isServiceSelected
+                        };
+                    })" multiple="multiple" class="listbox" disabled>
+                                </select>
+                            </div>      
+                    }
+                   
 
                         <button type="submit" class="btn btn-danger">Next</button>
                         <a asp-page="/BookingList" class="btn btn-primary">Back</a>
