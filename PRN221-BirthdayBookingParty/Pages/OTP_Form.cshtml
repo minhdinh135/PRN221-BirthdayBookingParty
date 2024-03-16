@@ -1,0 +1,34 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.OTP_FormModel
+@{
+                <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Enter OTP</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                    @if (TempData["OTPCode"] != null)
+                    {
+                                <input type="hidden" asp-for="OTPCode" value="@TempData["OTPCode"]">  
+                    }
+                        <div class="form-group">
+                            <label>OTP:</label>
+                            <input type="text" asp-for="EnteredOTP" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit OTP</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    @if (Model.ModelState.ErrorCount > 0)
+    {
+                <div class="alert alert-danger" role="alert">
+            @foreach (var error in Model.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                @error.ErrorMessage <br>
+            }
+                </div>
+    }
+    }
