@@ -66,8 +66,15 @@
 
                                     @if (isCustomer)
                                     {
+                                            if(booking.BookingStatus != "Accept" && booking.BookingStatus != "Done")
+                                            {
                                                 <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
-                                                <td><a class="btn btn-primary" asp-page="/BookingListDetails" asp-route-id="@booking.BookingId">View</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td><button class="btn btn-danger" disabled>Delete</button></td>
+                                            }
+                                            <td><a class="btn btn-primary" asp-page="/BookingListDetails" asp-route-id="@booking.BookingId">View</a></td>
                                                 <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
                                     }
                                     @if (isHost)
