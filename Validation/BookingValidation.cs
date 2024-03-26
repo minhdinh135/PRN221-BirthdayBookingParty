@@ -9,4 +9,9 @@
     {
         return partyDateTime < DateTime.Now.AddMonths(6);
     }
+
+    public static bool IsPartyDateInWorkingHours(DateTime partyDateTime)
+    {
+        return !(partyDateTime.TimeOfDay >= TimeSpan.Zero && partyDateTime.TimeOfDay <= TimeSpan.FromHours(6));
+    }
 }

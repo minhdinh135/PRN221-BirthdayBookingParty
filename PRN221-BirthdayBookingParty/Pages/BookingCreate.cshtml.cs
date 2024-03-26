@@ -12,7 +12,7 @@ namespace PRN221_BirthdayBookingParty.Pages
 {
     [Authorize(Policy = "CustomerSessionPolicy")]
 
-    [BindProperties]
+    [BindProperties(SupportsGet = true)]
     public class BookingCreateModel : PageModel
     {
         public DateTime BookingDate { get; set; } = DateTime.Now;
@@ -62,20 +62,27 @@ namespace PRN221_BirthdayBookingParty.Pages
             if (!BookingValidation.IsPartyDateTimeAfterTwoDays(PartyStartTime))
             {
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be at least 2 days from now.");
-                return Page();
+                return RedirectToPage();
             }
 
             if (!BookingValidation.IsPartyDateTimeWithinSixMonths(PartyStartTime))
             {
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be within 6 months from now.");
-                return Page();
+                return RedirectToPage();
             }
 
-            if (bookingRepository.GetAll().Any(b => b.PartyDateTime.Date == PartyStartTime.Date))
+            //if (bookingRepository.GetAll().Any(b => b.PartyDateTime.Date == PartyStartTime.Date))
+            //{
+            //    ModelState.AddModelError("PartyDateTime", "Party date and time is already booked.");
+            //    return RedirectToPage();
+            //}
+
+            if(!BookingValidation.IsPartyDateInWorkingHours(PartyStartTime))
             {
-                ModelState.AddModelError("PartyDateTime", "Party date and time is already booked.");
-                return Page();
+                ModelState.AddModelError("PartyDateTime", "Party date and time is not in between 6am and 0am");
+                return RedirectToPage();
             }
+
             Booking booking = new Booking
             {
                 BookingDate = DateTime.Now,
