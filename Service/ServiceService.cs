@@ -28,6 +28,7 @@ namespace Services
             Service existingservice = serviceRepository.GetAll().FirstOrDefault(p => p.ServiceId == id);
 
             existingservice.ServiceName = service.ServiceName;
+            existingservice.ServiceStatus = service.ServiceStatus;
 
             serviceRepository.Update(existingservice);
 
