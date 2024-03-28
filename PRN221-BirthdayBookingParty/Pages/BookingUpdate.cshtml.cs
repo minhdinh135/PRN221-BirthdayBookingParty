@@ -53,28 +53,35 @@ namespace PRN221_BirthdayBookingParty.Pages
         {
             Booking bookingToUpdate = _bookingRepository.GetAll().FirstOrDefault(b => b.BookingId == BookingId);
             Payment paymentToUpdate = _paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == BookingId);
-			Room roomToUpdate = _roomRepository.GetAll().FirstOrDefault(r => r.RoomId == bookingToUpdate.RoomId);
+            Room roomToUpdate = _roomRepository.GetAll().FirstOrDefault(r => r.RoomId == bookingToUpdate.RoomId);
 
-			if (bookingToUpdate == null)
+            if (bookingToUpdate == null)
             {
                 return NotFound();
             }
 
-            bookingToUpdate.BookingId = BookingId;
             bookingToUpdate.Feedback = Feedback;
             bookingToUpdate.BookingStatus = BookingStatus;
             paymentToUpdate.PaymentStatus = PaymentStatus;
 
-			if (bookingToUpdate.BookingStatus == "Deny" || bookingToUpdate.BookingStatus == "Done")
-			{
-				roomToUpdate.RoomStatus = "Inactive";
-				_roomRepository.Update(roomToUpdate);
-			}
+            if (BookingStatus == "Deny" || BookingStatus == "Done")
+            {
+                roomToUpdate.RoomStatus = "Inactive";
+            }
+            else if (PaymentStatus == "CashDone")
+            {
+                paymentToUpdate.PaidMoney = paymentToUpdate.TotalPrice;
+            }
 
-			_bookingRepository.Update(bookingToUpdate);
+            _bookingRepository.Update(bookingToUpdate);
             _paymentRepository.Update(paymentToUpdate);
+            if (roomToUpdate != null)
+            {
+                _roomRepository.Update(roomToUpdate);
+            }
 
             return RedirectToPage("/BookingList");
         }
+
     }
 }

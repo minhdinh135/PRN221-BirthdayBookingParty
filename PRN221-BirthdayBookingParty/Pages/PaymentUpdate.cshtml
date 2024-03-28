@@ -27,13 +27,18 @@
                         <input type="number" asp-for="DepositMoney" class="form-control" disabled />
                     </div>
 
+                    <div class="mb-3">
+                        <label asp-for="FormOfPayment" class="form-label">Form Of Payment:</label>
+                        <input type="text" asp-for="FormOfPayment" class="form-control" disabled />
+                    </div>
+
                     @if (isCustomer)
                     {
-                        <button type="submit" class="btn btn-danger">Update Booking</button>
+                        <a asp-page="/BookingList" class="btn btn-primary">Back</a>
                     }
                     else
                     {
-                        <a asp-page="/BookingList" class="btn btn-primary">Cancel</a>
+                        <a asp-page="/BookingList" class="btn btn-primary">Back</a>
                     }
                 </form>
             </div>

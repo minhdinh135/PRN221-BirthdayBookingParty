@@ -12,7 +12,7 @@ public partial class Booking
     public string BookingStatus { get; set; }
     public string Feedback { get; set; }
 
-    public Payment Payment { get; set; } 
+    public virtual Payment Payment { get; set; } 
 
     public virtual ICollection<BookingService> BookingServices { get; set; } = new List<BookingService>();
 

@@ -1,11 +1,10 @@
 ﻿@page "/Service/Create"
 @model PRN221_BirthdayBookingParty.Pages.ServiceCreateModel
 
-<br>
-<h1>Create New Service</h1>
-<br>
-
 <form method="post">
+                <div class="container mt-4">
+            <h3 class="card-title">Create New Service</h3>
+            <br>
     <div class="form-group">
         <label for="ServiceName">Service Name:</label>
         <input type="text" class="form-control" asp-for="ServiceName" required>
@@ -34,5 +33,5 @@
         <button type="submit" class="btn btn-primary">Create</button>
         <a asp-page="./ServiceManagement">Back to List</a>
     </div>
-    
+    </div>
 </form>

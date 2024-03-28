@@ -71,10 +71,10 @@ namespace PRN221_BirthdayBookingParty.Pages
                 return RedirectToPage();
             }
 
-            //if (bookingRepository.GetAll().Any(b => b.PartyDateTime.Date == PartyStartTime.Date))
+            //if (bookingrepository.getall().any(b => b.partydatetime.date == partystarttime.date))
             //{
-            //    ModelState.AddModelError("PartyDateTime", "Party date and time is already booked.");
-            //    return RedirectToPage();
+            //    modelstate.addmodelerror("partydatetime", "party date and time is already booked.");
+            //    return redirecttopage();
             //}
 
             if(!BookingValidation.IsPartyDateInWorkingHours(PartyStartTime))

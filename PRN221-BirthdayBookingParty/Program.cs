@@ -10,6 +10,7 @@ using Repositories;
 using Repositories.Interfaces;
 using Services;
 using Services.Interfaces;
+using Services.MomoService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +21,10 @@ builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinute
 builder.Services.AddScoped<IRepositoryBase<User>, UserRepository>();
 builder.Services.AddScoped<ServiceRepository>();
 builder.Services.AddScoped<PackageRepository>();
+builder.Services.Configure<MomoConfig>(builder.Configuration.GetSection("Momo"));
 
 builder.Services.AddDbContext<BookingPartyContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingPartyDB"))
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DB"))
 );
 
 builder.Services.AddHttpContextAccessor();

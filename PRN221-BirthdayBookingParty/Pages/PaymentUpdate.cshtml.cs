@@ -8,11 +8,13 @@ using System.Text.Json;
 namespace PRN221_BirthdayBookingParty.Pages
 {
     [Authorize(Policy = "LoginSessionPolicy")]
+    [BindProperties]
     public class PaymentUpdateModel : PageModel
     {
         public decimal DepositMoney { get; set; }
         public decimal TotalPrice { get; set; }
         public string PaymentStatus { get; set; }
+        public string FormOfPayment { get; set; }
         public List<Service> Services { get; set; }
 
         private BookingRepository bookingRepository;
@@ -40,9 +42,11 @@ namespace PRN221_BirthdayBookingParty.Pages
 
             string roomString = HttpContext.Session.GetString("ROOM");
             Room room = JsonSerializer.Deserialize<Room>(roomString);
+            Payment payment = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == booking.BookingId);
 
             Services = selectedServices;
             PaymentStatus = "Not yet";
+            FormOfPayment = payment.FormOfPayment;
             TotalPrice = selectedServices.Sum(s => s.Price) + room.RoomPrice;
             DepositMoney = Decimal.Multiply((decimal)0.2, TotalPrice);
         }
@@ -63,8 +67,11 @@ namespace PRN221_BirthdayBookingParty.Pages
             originalRoom.RoomStatus = "Inactive";
             roomRepository.Update(originalRoom);
 
+            Payment payment = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == booking.BookingId);
+
             Services = selectedServices;
             PaymentStatus = "Not yet";
+            FormOfPayment = payment.FormOfPayment;
             TotalPrice = selectedServices.Sum(s => s.Price) + room.RoomPrice;
             DepositMoney = Decimal.Multiply((decimal)0.2, TotalPrice);
 
@@ -89,8 +96,8 @@ namespace PRN221_BirthdayBookingParty.Pages
 
             Payment paymentToUpdate = paymentRepository.GetAll().FirstOrDefault(p => p.BookingId == booking.BookingId);
             paymentToUpdate.TotalPrice = TotalPrice;
-            paymentToUpdate.DepositMoney = DepositMoney;
             paymentToUpdate.PaymentStatus = PaymentStatus;
+            paymentToUpdate.FormOfPayment = FormOfPayment;
 
             paymentRepository.Update(paymentToUpdate);
 
