@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BookingWorkerService
@@ -30,21 +31,37 @@ namespace BookingWorkerService
                 try
                 {
                     DateTime currentTime = DateTime.Now;
-                    var expiredBookings = bookingRepository.GetAll().Where(b => b.PartyEndTime <= currentTime);
 
-                    foreach (var booking in expiredBookings)
+                    var bookingsToUpdate = bookingRepository.GetAll().Where(b => b.PartyEndTime <= currentTime && b.BookingStatus != "Done");
+
+                    foreach (var booking in bookingsToUpdate)
                     {
                         booking.BookingStatus = "Done";
-
                         bookingRepository.Update(booking);
 
                         var roomToUpdate = roomRepository.GetAll().FirstOrDefault(r => r.RoomId == booking.RoomId);
-                        roomToUpdate.RoomStatus = "Inactive";
-                        roomRepository.Update(roomToUpdate);
+                        if (roomToUpdate != null)
+                        {
+                            roomToUpdate.RoomStatus = "Inactive";
+                            roomRepository.Update(roomToUpdate);
+                        }
+                        else
+                        {
+                            _logger.LogWarning($"Room with ID {booking.RoomId} not found.");
+                        }
 
                         _logger.LogInformation($"Booking status updated for booking ID {booking.BookingId}.");
                     }
 
+                    var bookingsToPrepare = bookingRepository.GetAll().Where(b => b.BookingDate.AddDays(1) <= currentTime && b.BookingStatus == "Accept");
+
+                    foreach (var booking in bookingsToPrepare)
+                    {
+                        booking.BookingStatus = "Preparing";
+                        bookingRepository.Update(booking);
+
+                        _logger.LogInformation($"Booking status updated to Preparing for booking ID {booking.BookingId}.");
+                    }
                 }
                 catch (Exception ex)
                 {
