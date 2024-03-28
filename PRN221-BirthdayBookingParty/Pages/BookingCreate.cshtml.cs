@@ -76,6 +76,11 @@ namespace PRN221_BirthdayBookingParty.Pages
             //    ModelState.AddModelError("PartyDateTime", "Party date and time is already booked.");
             //    return RedirectToPage();
             //}
+            if(!BookingValidation.IsEndTimeValid(PartyStartTime, PartyEndTime))
+            {
+                ModelState.AddModelError("PartyEndTime", "Party end time must after 1 hour and in the same day with start time");
+                return RedirectToPage();
+            }
 
             if(!BookingValidation.IsPartyDateInWorkingHours(PartyStartTime))
             {
