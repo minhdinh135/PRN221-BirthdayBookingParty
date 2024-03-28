@@ -39,7 +39,7 @@
                                 }
                                 @if (isHost)
                                 {
-                                           <th colspan="4">Action</th>
+                                           <th colspan="3">Action</th>
                                 }
                                 @if(isAdmin)
                                     {
@@ -68,7 +68,7 @@
 
                                     @if (isCustomer)
                                     {
-                                            if(booking.BookingStatus != "Done")
+                                            if(booking.BookingStatus != "Done" && booking.BookingStatus != "Preparing")
                                             {
                                                 <td><a class="btn btn-danger" asp-page="/BookingDelete" asp-route-id="@booking.BookingId">Delete</a></td>
                                             }
@@ -84,7 +84,6 @@
                                                 <td><a class="btn btn-primary" asp-page="/BookingUpdate" asp-route-id="@booking.BookingId">Update</a></td>
                                                 <td><a class="btn btn-primary" asp-page="/BookingListDetails" asp-route-id="@booking.BookingId">View</a></td>
                                                 <td><a class="btn btn-primary" asp-page="/SendEmail" asp-route-id="@booking.UserId">Send Email</a></td>
-                                                <td><a class="btn btn-primary" asp-page="/HostPaymentConfirmation" asp-route-id="@booking.BookingId">Confirmation</a></td>
                                     }
                                     @if (isAdmin)
                                     {
