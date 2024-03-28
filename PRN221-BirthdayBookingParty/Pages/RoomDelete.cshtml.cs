@@ -27,6 +27,12 @@ namespace PRN221_BirthdayBookingParty.Pages
             _roomRepository = new RoomRepository();
 
             room = _roomRepository.GetAll().FirstOrDefault(r => r.RoomId == id);
+
+            if(room.RoomStatus == "Active")
+            {
+                return RedirectToPage("/RoomManagement");
+            }
+
             room.RoomStatus = "Deleted";
             _roomRepository.Update(room);
 
