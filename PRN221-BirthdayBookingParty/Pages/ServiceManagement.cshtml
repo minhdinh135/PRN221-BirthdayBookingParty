@@ -23,7 +23,7 @@
 						</tr>
 					</thead>
 					<tbody>
-			@foreach (var service in Model.Services)
+			@foreach (var service in Model.Services.Where(s => s.ServiceStatus != "Deleted").ToList())
 			{
 				<tr>
 					<td>@(serviceIndex++)</td>

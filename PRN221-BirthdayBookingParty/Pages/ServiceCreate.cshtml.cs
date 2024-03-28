@@ -52,6 +52,7 @@ namespace PRN221_BirthdayBookingParty.Pages
             {
                 PackageId = PackageId,
                 ServiceName = ServiceName,
+                ServiceStatus = "Active",
                 Price = Price,
             };
 

@@ -197,6 +197,10 @@ namespace DAOs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ServiceStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ServiceId");
 
                     b.HasIndex("PackageId");
