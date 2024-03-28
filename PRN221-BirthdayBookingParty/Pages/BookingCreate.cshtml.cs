@@ -71,11 +71,6 @@ namespace PRN221_BirthdayBookingParty.Pages
                 return RedirectToPage();
             }
 
-            if (PartyStartTime != PartyEndTime)
-            {
-                ModelState.AddModelError("PartyEndTime", "Party End Time and Party Start Time must be the same");
-                return RedirectToPage();
-            }
 
             if (!BookingValidation.IsPartyDateInWorkingHours(PartyStartTime))
             {
