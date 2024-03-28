@@ -14,4 +14,10 @@
     {
         return !(partyDateTime.TimeOfDay >= TimeSpan.Zero && partyDateTime.TimeOfDay <= TimeSpan.FromHours(6));
     }
+	public static bool IsEndTimeValid(DateTime partyDateTime, DateTime endTime)
+	{
+		DateTime minEndTime = partyDateTime.AddHours(1);
+        
+		return endTime >= minEndTime && endTime.Date == partyDateTime.Date;
+	}
 }
