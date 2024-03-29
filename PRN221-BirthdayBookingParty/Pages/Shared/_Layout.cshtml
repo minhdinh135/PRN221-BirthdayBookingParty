@@ -65,6 +65,8 @@
 						
 						@if (isAdmin)
 						{
+						var adminName = Context.Session.GetString("ADMIN_NAME");
+						<li><a class="nav-link text-dark" asp-area="" asp-page="/ProfileAdmin">@adminName</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
 							<li><a class="nav-link text-dark" asp-area="" asp-page="/HostManagement">Host</a></li>
 							<li><a class="nav-link text-dark" asp-area=""  asp-page="/BookingList">Booking</a></li>
@@ -85,6 +87,8 @@
 
 						@if (isHost)
 						{
+						var hostName = Context.Session.GetString("HOST_NAME");
+						<li><a class="nav-link text-dark" asp-area="" asp-page="/ProfileHost">@hostName</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/CustomerManagement">Customer</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/BookingList">Booking List</a></li>
 						<li><a class="nav-link text-dark" asp-area="" asp-page="/ServiceManagement">Service List</a></li>
