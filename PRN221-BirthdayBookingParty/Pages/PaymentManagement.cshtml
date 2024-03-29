@@ -1,32 +1,65 @@
 ﻿@page
 @model PRN221_BirthdayBookingParty.Pages.PaymentManagementModel
 @{
-        <div class="container mt-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Payment</h3>
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label asp-for="PaymentStatus" class="form-label">Payment Status:</label>
-                            <input type="text" asp-for="PaymentStatus" class="form-control" disabled />
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="TotalPrice" class="form-label">Total Price:</label>
-                            <input type="number" asp-for="TotalPrice" class="form-control" disabled />
-                        </div>
-
-                        <div class="mb-3">
-                             <label asp-for="DepositMoney" class="form-label">Deposit Money:</label>
-                             <input type="number" asp-for="DepositMoney" class="form-control" disabled/>
-                        </div>
-                            
-                        <button type="submit" class="btn btn-danger">Book</button>
-                        <a asp-page="/BookingCreate" class="btn btn-primary">Back</a>
-                    </form>
-                </div>
-            </div>
-        </div>
+    ViewData["Title"] = "Payment Management";
 }
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Payment</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" id="paymentForm">
+                <div class="mb-3">
+                    <label asp-for="PaymentStatus" class="form-label">Payment Status:</label>
+                    <input type="text" asp-for="PaymentStatus" class="form-control" disabled />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TotalPrice" class="form-label">Total Price ($):</label>
+                    <input type="number" asp-for="TotalPrice" class="form-control" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FormOfPayment">Form of payment:</label>
+                    <select id="payment" class="mb-3" asp-for="FormOfPayment" name="FormOfPayment" required>
+                        <option value="Cash">Cash</option>
+                        <option value="Momo">Momo</option>
+                    </select>
+                </div>  
+
+                <button type="submit" class="btn btn-danger">Book</button>
+                <a asp-page="/BookingCreate" class="btn btn-primary">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        var form = this;
+        if (document.getElementById('payment').value === 'Momo') {
+                    form.submit();
+                    return;
+                }
+        var formData = new FormData(form);
+        var request = new XMLHttpRequest();
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 300) {
+                if (formData.get('FormOfPayment') === 'Cash') {
+                    alert('A request has been sent to the host for payment confirmation. Thank you');
+                    window.location.href = '/BookingList';
+                } 
+            }
+        };
+
+        request.open('POST', form.action);
+        request.send(formData);
+
+        event.preventDefault();
+    });
+</script>
+
+

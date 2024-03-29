@@ -8,7 +8,7 @@
 <form method="post">
     <div class="form-group">
         <label for="ServiceName">Service Name:</label>
-        <input type="text" class="form-control" asp-for="ServiceName" required>
+        <input type="text" class="form-control" asp-for="ServiceName" required />
         <span asp-validation-for="ServiceName" class="text-danger"></span>
     </div>
 
@@ -25,14 +25,13 @@
 
     <div class="form-group">
         <label for="Price">Price:</label>
-        <input type="number" class="form-control" asp-for="Price" required>
+        <input type="number" class="form-control" asp-for="Price" required />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
     <br>
-    <div>
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a asp-page="./ServiceManagement">Back to List</a>
-    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./ServiceManagement">Back to List</a>
     
 </form>

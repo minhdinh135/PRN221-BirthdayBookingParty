@@ -11,9 +11,11 @@ public partial class Payment
 
     public string PaymentStatus { get; set; }
 
-    public decimal DepositMoney { get; set; }
+    public decimal PaidMoney { get; set; }
 
     public int BookingId { get; set; }
+
+    public string FormOfPayment {  get; set; }
 
     public virtual Booking Booking { get; set; }
 }

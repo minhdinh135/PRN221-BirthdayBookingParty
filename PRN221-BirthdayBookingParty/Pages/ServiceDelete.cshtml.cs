@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
+using Repositories;
 using Services.Interfaces;
 
 namespace PRN221_BirthdayBookingParty.Pages
@@ -10,10 +11,11 @@ namespace PRN221_BirthdayBookingParty.Pages
     public class ServiceDeleteModel : PageModel
     {
         private readonly IServiceService _serviceService;
-
+        private ServiceRepository serviceRepository;
         public ServiceDeleteModel(IServiceService serviceBookingService)
         {
             _serviceService = serviceBookingService;
+            serviceRepository = new ServiceRepository();
         }
 
         [BindProperty]
@@ -45,8 +47,12 @@ namespace PRN221_BirthdayBookingParty.Pages
 
             try
             {
-                var deletedService = _serviceService.DeleteService(id);
-                TempData["Message"] = $"Service '{deletedService.ServiceName}' deleted successfully";
+                var existingService = serviceRepository.GetAll().FirstOrDefault(s => s.ServiceId == id);
+                existingService.ServiceStatus = "Deleted";
+
+                serviceRepository.Update(existingService);
+
+                TempData["Message"] = $"Service '{existingService.ServiceName}' deleted successfully";
                 return RedirectToPage("/ServiceManagement");
             }
             catch (ArgumentException ex)

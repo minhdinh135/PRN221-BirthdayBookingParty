@@ -47,9 +47,8 @@
                                     <select class="form-control" asp-for="PaymentStatus" name="PaymentStatus" required>
                                         <option value="Deny">Deny</option>
                                         <option value="Not yet">Not yet</option>
-                                        <option value="DepositMoneyDone">DepositMoneyDone</option>
+                                        <option value="CashDone">CashDone</option>
                                         <option value="Done">Done</option>
-                                        <option value="Refund">Refund</option>
                                     </select>
                              </div>  
                     }
@@ -80,7 +79,7 @@
                             <select class="form-control" asp-for="PaymentStatus" name="PaymentStatus" disabled>
                                 <option value="Deny">Deny</option>
                                 <option value="Not yet">Not yet</option>
-                                <option value="DepositMoneyDone">DepositMoneyDone</option>
+                                <option value="CashDone">CashDone</option>
                                 <option value="Done">Done</option>
                             </select>
                         </div>  
@@ -104,23 +103,21 @@
         </div>
     </div>
 
-            <script>
+                <script>
         document.addEventListener('DOMContentLoaded', function () {
             var bookingStatusDropdown = document.getElementById('BookingStatus');
             var paymentStatusDropdown = document.getElementById('PaymentStatus');
 
             bookingStatusDropdown.addEventListener('change', function () {
                 var selectedBookingStatus = bookingStatusDropdown.value;
-                // Clear existing options
                 paymentStatusDropdown.innerHTML = '';
 
-                // Add new options based on selected booking status
                 switch (selectedBookingStatus) {
                     case 'Pending':
                         paymentStatusDropdown.innerHTML = '<option value="Not yet">Not yet</option>';
                         break;
                     case 'Accept':
-                        paymentStatusDropdown.innerHTML = '<option value="DepositMoneyDone">DepositMoneyDone</option>';
+                        paymentStatusDropdown.innerHTML = '<option value="CashDone">CashDone</option>';
                         break;
                     case 'Done':
                         paymentStatusDropdown.innerHTML = '<option value="Done">Done</option>';
@@ -134,6 +131,7 @@
             });
         });
     </script>
+
 
 
 }

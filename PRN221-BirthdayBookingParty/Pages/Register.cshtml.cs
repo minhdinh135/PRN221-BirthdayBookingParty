@@ -68,8 +68,6 @@ namespace PRN221_BirthdayBookingParty.Pages
             }
 
             User user = new User
-
-
             {
                 FullName = FullName,
                 Email = Email,
