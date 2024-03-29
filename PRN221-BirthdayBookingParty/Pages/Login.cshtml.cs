@@ -37,14 +37,16 @@ namespace NguyenHoangLamRazorPages.Pages
             }
 
             if (user.RoleId.Equals(1)) {
-				HttpContext.Session.SetString("ADMIN", JsonSerializer.Serialize(user));
+                HttpContext.Session.SetString("ADMIN_NAME", user.FullName);
+                HttpContext.Session.SetString("ADMIN", JsonSerializer.Serialize(user));
 				HttpContext.Session.SetString("USER_ROLE", "Admin");
                 return RedirectToPage("/Index");
 			}
 
 			if(user.RoleId.Equals(2))
 			{
-				HttpContext.Session.SetString("HOST", JsonSerializer.Serialize(user));
+                HttpContext.Session.SetString("HOST_NAME", user.FullName);
+                HttpContext.Session.SetString("HOST", JsonSerializer.Serialize(user));
                 HttpContext.Session.SetString("USER_ROLE", "Host");
                 return RedirectToPage("/Index");
 			}

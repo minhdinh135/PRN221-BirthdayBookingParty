@@ -70,11 +70,6 @@ namespace PRN221_BirthdayBookingParty.Pages
                 ModelState.AddModelError("PartyDateTime", "Party date and time must be within 6 months from now.");
                 return RedirectToPage();
             }
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> b11edea8d9d09e28a219e82ef1cbf1fb955d50f5
             if(!BookingValidation.IsEndTimeValid(PartyStartTime, PartyEndTime))
             {
                 ModelState.AddModelError("PartyEndTime", "Party end time must after 1 hour and in the same day with start time");

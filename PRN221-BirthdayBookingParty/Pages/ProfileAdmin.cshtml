@@ -1,0 +1,40 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.ProfileAdminModel
+@{
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Admin Profile</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        @if (Model.User != null)
+                        {
+                            <div class="mb-3">
+                                <strong>Email:</strong> @Model.User.Email
+                            </div>
+                            <div class="mb-3">
+                                <strong>Fullname:</strong> @Model.User.FullName
+                            </div>
+                            <div class="mb-3">
+                                <strong>Address:</strong> @Model.User.Address
+                            </div>
+                            <div class="mb-3">
+                                <strong>Phone:</strong> @Model.User.Phone
+                            </div>
+                            <div class="mb-3">
+                                <strong>Birthday:</strong> @Model.User.Birthday
+                            </div>
+                        }
+                        else
+                        {
+                            <p>Admin information not available.</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
