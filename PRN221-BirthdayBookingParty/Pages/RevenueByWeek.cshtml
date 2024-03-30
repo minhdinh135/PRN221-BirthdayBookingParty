@@ -1,0 +1,47 @@
+﻿@page
+@model PRN221_BirthdayBookingParty.Pages.RevenueByWeekModel
+@{
+	ViewData["Title"] = "Revenue By Week";
+}
+<h1 class="text-center">Revenue By Week</h1>
+
+<div class="container mt-4">
+    <canvas id="revenueChart" width="800" height="400"></canvas>
+</div>
+
+@section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <script>
+            var ctx = document.getElementById('revenueChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.WeekLabels)),
+                    datasets: [{
+                        label: 'Weekly Revenue ($)',
+                            data: @Html.Raw(Json.Serialize(Model.WeeklyRevenue)),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Revenue ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Week'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+}
